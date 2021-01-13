@@ -6,7 +6,7 @@ hackintosh-Inspiron3670 by franksfc
 | Inspiron 3670 |                                                 |
 | :------------ | ----------------------------------------------- |
 | 主板          | B360                                            |
-| cpu           | I5-9400                                         |
+| cpu           | i5-9400                                         |
 | 显卡          | UHD630(1.05GHZ)                                  |
 | 网卡/蓝牙     | AR9565 / 奋威 T919（BCM94360CD）                |
 | 声卡          | Realtek ALC867 （layout id: 11)                 |
