@@ -39,5 +39,5 @@ hackintosh-Inspiron3670 by franksfc
 **2021/1/13日更新** 
 
 thannks:
-1，https://www.insanelymac.com/forum/topic/345526-opencore-macos-bigsur-on-dell-inspiron-3670/
-2，https://www.longzc.cn/index.php/archives/308
+1，https://www.insanelymac.com/forum/topic/345526-opencore-macos-bigsur-on-dell-inspiron-3670/   
+2，https://www.longzc.cn/index.php/archives/308    
