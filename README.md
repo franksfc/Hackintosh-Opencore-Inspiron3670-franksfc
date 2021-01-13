@@ -1,6 +1,8 @@
 # hackintosh-Inspiron3670-franksfc
 hackintosh-Inspiron3670 by franksfc
 
+![image](https://github.com/franksfc/hackintosh-Inspiron3670-franksfc/blob/master/preview.png)
+
 机型配置：
 
 | Inspiron 3670 |                                                 |
