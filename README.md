@@ -31,3 +31,6 @@ hackintosh-Inspiron3670 by franksfc
 **引导版本：Opencore 0.6.5**  
 **系统版本：Big Sur beta 11**  
 **2021/1/13日更新** 
+
+thannks:
+https://www.insanelymac.com/forum/topic/345526-opencore-macos-bigsur-on-dell-inspiron-3670/
