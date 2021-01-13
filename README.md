@@ -28,9 +28,14 @@ hackintosh-Inspiron3670 by franksfc
 - [x] 原生NVRAM
 - [x] 温度传感器正常
 
+未实现功能：
+前置SD卡驱动
+
+**注意：因为本机没有USB供电接口，所以T919蓝牙无法使用，配合原来的蓝牙AR9565就可以啦，亦可以实现接力和隔空投送**
 **引导版本：Opencore 0.6.5**  
 **系统版本：Big Sur beta 11**  
 **2021/1/13日更新** 
 
 thannks:
-https://www.insanelymac.com/forum/topic/345526-opencore-macos-bigsur-on-dell-inspiron-3670/
+1，https://www.insanelymac.com/forum/topic/345526-opencore-macos-bigsur-on-dell-inspiron-3670/
+2，https://www.longzc.cn/index.php/archives/308
