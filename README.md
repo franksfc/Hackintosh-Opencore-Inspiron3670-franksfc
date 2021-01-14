@@ -29,6 +29,7 @@ hackintosh-Inspiron3670 by franksfc
 - [x] 加载原生电源管理，开启节能五项
 - [x] 原生NVRAM
 - [x] 温度传感器正常
+- [x] 解锁CFGlock，命令：setup_var 0x5BE 0x00（仅使用本机bios）
 
 未实现功能：
 前置SD卡驱动
