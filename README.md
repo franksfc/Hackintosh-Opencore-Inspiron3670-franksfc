@@ -16,8 +16,8 @@ hackintosh-Inspiron3670 by franksfc
 | 硬盘          | KBG40ZNS256G NVMe KIOXIA 256GB+ ST1000DM010 1TB |
 | 显示器        | DELL SE2417HG                                   |
 
-**机型：iMac 18，1** 
-此机型下cpu性能更好
+**机型：iMac 19.1** 
+以适合MacOS Monterey 中的Airplay to Mac功能
 
 已实现功能
 - [x] 网卡蓝牙正常识别使用，支持airdrop 接力
@@ -35,10 +35,10 @@ hackintosh-Inspiron3670 by franksfc
 未实现功能：  
 前置SD卡驱动
 
-**引导版本：Opencore 0.6.9**   
-**系统版本：Big Sur 11**   
-**2021/5/26日更新**   
+**引导版本：Opencore 0.7.0**   
+**系统版本：Monterey 12**   
+**2021/6/12日更新**   
 
 thanks:  
-1，https://www.insanelymac.com/forum/topic/345526-opencore-macos-bigsur-on-dell-inspiron-3670/   
-2，https://www.longzc.cn/index.php/archives/308    
+https://www.insanelymac.com/forum/topic/345526-opencore-macos-bigsur-on-dell-inspiron-3670/   
+
