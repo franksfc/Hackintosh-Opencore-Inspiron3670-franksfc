@@ -79,9 +79,9 @@ VGA接口
 4，输入setup_var 0x8DD 0x3（DVMT Total MAX）  
 5，输入reboot重启。
    
-![image]（https://github.com/franksfc/hackintosh-Inspiron3670-franksfc/blob/master/CFG%20Lock.jpg）
+![image](https://github.com/franksfc/hackintosh-Inspiron3670-franksfc/blob/master/CFG%20Lock.jpg)
      
-![image]（https://github.com/franksfc/hackintosh-Inspiron3670-franksfc/blob/master/DVMT.jpg）
+![image](https://github.com/franksfc/hackintosh-Inspiron3670-franksfc/blob/master/DVMT.jpg)
    
 **thanks:**  
 https://www.insanelymac.com/forum/topic/345526-opencore-macos-bigsur-on-dell-inspiron-3670/   
