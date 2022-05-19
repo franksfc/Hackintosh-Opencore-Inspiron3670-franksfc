@@ -3,9 +3,9 @@ hackintosh-Inspiron3670 by franksfc
 
 ![image](https://github.com/franksfc/hackintosh-Inspiron3670-franksfc/blob/master/preview.png)
 
-机型配置：
+***机型配置：***
 
-| Inspiron 3670 |                                                 |
+| ***Inspiron 3670*** |                                                 |
 | :------------ | ----------------------------------------------- |
 | 主板          | B360                                            |
 | cpu           | i5-9400                                         |
@@ -16,10 +16,8 @@ hackintosh-Inspiron3670 by franksfc
 | 硬盘          | KBG40ZNS256G NVMe KIOXIA 256GB+ ST1000DM010 1TB |
 | 显示器        | DELL SE2417HG                                   |
 
-**机型：iMac 19.1** 
-以适合MacOS Monterey 中的Airplay to Mac功能
 
-已实现功能
+**已实现功能**
 - [x] 网卡蓝牙正常识别使用，支持airdrop 接力
 - [x] VDA解码、核显满速
 - [x] 声卡驱动，修补HPET、RTC、TMR
@@ -32,13 +30,13 @@ hackintosh-Inspiron3670 by franksfc
 - [x] 温度传感器正常
 - [x] 解锁CFGlock，命令：setup_var 0x5BE 0x00（仅使用本机bios）
 
-未实现功能：  
+**未实现功能：**  
 VGA接口
 
-半残功能：前置SD读卡器
+**待完善功能：**
+前置SD读卡器
 
-我的折腾成果：  
-
+***我的折腾成果：***  
 **1关于Trim**     
    这个BG4的固态硬盘在macOS的支持并不好，开机时间十分漫长，需要将SetApfsTrimTimeout设置为0，这时候macOS就会禁止TRIM，即使系统信息中TRIM support依然是支持       
   
