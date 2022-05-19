@@ -75,10 +75,14 @@ VGA接口
 ***如何解锁bios隐藏设置***   
 1，在EFI文件夹中放入给的EFI-bios文件，重命名为EFI。    
 2，输入setup_var 05BE 0x0(关闭CFG lock）   
-3,输入setup_var 0x8DC 0x2（DVMT 64MB）  
-4,输入setup_var 0x8DD 0x3（DVMT Total MAX）  
+3，输入setup_var 0x8DC 0x2（DVMT 64MB）  
+4，输入setup_var 0x8DD 0x3（DVMT Total MAX）  
 5，输入reboot重启。
-  
+   
+![image]（https://github.com/franksfc/hackintosh-Inspiron3670-franksfc/blob/master/CFG%20Lock.jpg）
+     
+![image]（https://github.com/franksfc/hackintosh-Inspiron3670-franksfc/blob/master/DVMT.jpg）
+   
 **thanks:**  
 https://www.insanelymac.com/forum/topic/345526-opencore-macos-bigsur-on-dell-inspiron-3670/   
 
