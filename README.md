@@ -71,6 +71,14 @@ VGA接口
 **9关于机型选择**     
    可以选择的机型有iMac与Macmini，iMac pro和Mac Pro没办法驱动核显，我一开始用的是iMac19,1但不知怎么，macOS的性能释放并没有Windows好。我在尝试机型的时候，发现iMac18,1是核显而且跑分及其高，我选择了它。缺失的功能可以用FeatureUnlock来解决    
     
+    
+***如何解锁bios隐藏设置***   
+1，在EFI文件夹中放入给的EFI-bios文件，重命名为EFI。    
+2，输入setup_var 05BE 0x0(关闭CFG lock）   
+3,输入setup_var 0x8DC 0x2（DVMT 64MB）  
+4,输入setup_var 0x8DD 0x3（DVMT Total MAX）  
+5，输入reboot重启。
+  
 **thanks:**  
 https://www.insanelymac.com/forum/topic/345526-opencore-macos-bigsur-on-dell-inspiron-3670/   
 
