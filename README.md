@@ -3,7 +3,7 @@ hackintosh-Inspiron3670 by franksfc
 
 ![image](https://github.com/franksfc/hackintosh-Inspiron3670-franksfc/blob/master/preview.png)
 
-### 机型配置：
+# 机型配置：
 
 | ***Inspiron 3670*** |                                                 |
 | :------------ | ----------------------------------------------- |
@@ -17,7 +17,7 @@ hackintosh-Inspiron3670 by franksfc
 | 显示器        | DELL SE2417HG                                   |
 
 
-### 已实现功能
+## 已实现功能
 - [x] 网卡蓝牙正常识别使用，支持airdrop 接力
 - [x] VDA解码、核显满速
 - [x] 声卡驱动，修补HPET、RTC、TMR
@@ -30,12 +30,12 @@ hackintosh-Inspiron3670 by franksfc
 - [x] 温度传感器正常
 - [x] 解锁CFGlock，命令：setup_var 0x5BE 0x00（仅使用本机bios）
 
-### 未实现功能：  
+## 未实现功能：  
 VGA接口
 hibernation
 Darkwake
 
-### 待完善功能：
+## 待完善功能：
 前置SD读卡器
    
 ## 关于Trim     
@@ -74,7 +74,7 @@ Darkwake
    可以选择的机型有iMac与Macmini，iMac pro和Mac Pro没办法驱动核显，我一开始用的是iMac19,1但不知怎么，macOS的性能释放并没有Windows好。我在尝试机型的时候，发现iMac18,1是核显而且跑分及其高，我选择了它。缺失的功能可以用FeatureUnlock来解决    
     
     
-### 如何解锁bios隐藏设置   
+# 如何解锁bios隐藏设置   
 1，在EFI文件夹中放入给的EFI-bios文件，重命名为EFI。    
 2，输入setup_var 05BE 0x0(关闭CFG lock）   
 3，输入setup_var 0x8DC 0x2（DVMT 64MB）  
