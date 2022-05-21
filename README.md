@@ -37,8 +37,6 @@ Darkwake
 
 ## 待完善功能：
 前置SD读卡器
-
-## 我的折腾成果  
    
 # 关于Trim     
    这个BG4的固态硬盘在macOS的支持并不好，开机时间十分漫长，需要将SetApfsTrimTimeout设置为0，这时候macOS就会禁止TRIM，即使系统信息中TRIM support依然是支持       
