@@ -32,8 +32,8 @@ hackintosh-Inspiron3670 by franksfc
 
 ## 未实现功能：  
 VGA接口
-hibernation
-Darkwake
+hibernation   
+Darkwake电能小憩    
 
 ## 待完善功能：
 前置SD读卡器
