@@ -1,11 +1,11 @@
-# hackintosh-Inspiron3670-franksfc
+# # hackintosh-Inspiron3670-franksfc
 image
 
 # 我的opencore引导
 我折腾的过程比较漫长，从下载黑果小兵的镜像用免驱独显，到拔掉独显定制opencore核显，最后不断完善具体的功能，直到黑苹果接近完美。给大家分享一下我的折腾成果，以及我的理由。
 
 ## 机型配置：
-| **_Inspiron 3670_** |                                                 |
+| _Inspiron 3670_ |                                                 |
 | :------------ | ----------------------------------------------- |
 | 主板          | B360                                            |
 | cpu           | i5-9400                                         |
@@ -17,34 +17,34 @@ image
 | 显示器        | DELL SE2417HG                                   |
 
 ## 已实现功能
-- [x] 网卡蓝牙正常识别使用，支持airdrop 接力
-- [x] VDA解码、核显满速
-- [x] 声卡完美驱动
-- [x] 修补HPET、RTC、TMR
-- [x] ACPI注入缺失部件
-- [x] 定制USB，快速充电
-- [x] 定制核显接口，支持hdmi输出
-- [x] 注入SBUS。摁下关机键跳出提示框
-- [x] 加载原生电源管理，开启节能五项
-- [x] 加载原生NVRAM
+- [x]  网卡蓝牙正常识别使用，支持airdrop 接力
+- [x]  VDA解码、核显满速
+- [x]  声卡完美驱动
+- [x]  修补HPET、RTC、TMR
+- [x]  ACPI注入缺失部件
+- [x]  定制USB，快速充电
+- [x]  定制核显接口，支持hdmi输出
+- [x]  注入SBUS。摁下关机键跳出提示框
+- [x]  加载原生电源管理，开启节能五项
+- [x]  加载原生NVRAM
 - [x] 完美hidpi
 - [x] 可以解锁CFGlock
 - [x] 目前测试支持休眠，完美睡眠
 
 ## 未实现功能：
-- [ ] VGA接口
+- [ ] [ ] VGA接口
 
 ## 不稳定功能：
-- [ ] 前置SD读卡器
+- [ ] [ ] 前置SD读卡器
 
 ## 1.0 Bios
 ### 1.1 Bios 设置
 
-* **关闭Secure Boot**
+* 关闭Secure Boot
 
-* **关闭Fast Boot**
+* 关闭Fast Boot
 
-* **SATAmode调整为AHCI**
+* SATAmode调整为AHCI
 
 * 关闭PTT technology
 * 关闭wake on USB（实际上不影响USB唤醒）
@@ -139,7 +139,7 @@ DSDT中搜索 `Processor`，如：
 
 ```
 
-根据查询结果，选择注入文件 **SSDT-PLUG-_SB.PR00**
+根据查询结果，选择注入文件 SSDT-PLUG-_SB.PR00
 
 ### 2.5 300系主板开启原生NVRAM
 打开你的DSDT，搜索 `001F0000`，确定自己的
@@ -147,7 +147,7 @@ DSDT中搜索 `Processor`，如：
 * lpc部件名字，如图示，我的lpc部件名叫`LPCB`，请根据实际情况记录
 * lpc的路径，如图左下角红线提示，我的LPC路径在`_SB_.PCI0.LPCB`
 
-* 下载**SSDT-PMC.dsl**根据自己的dsdt将第二行External和Scope中的设备路径改为你的。本机型不需要修改。注意Scope中_SB后没有“下划线”为`_SB.PCI0.LPCB`
+* 下载SSDT-PMC.dsl根据自己的dsdt将第二行External和Scope中的设备路径改为你的。本机型不需要修改。注意Scope中_SB后没有“下划线”为`_SB.PCI0.LPCB`
 
 ### 2.6 EC控制器
 
@@ -183,7 +183,7 @@ Now when opening this SSDT, you'll notice a few things. Mainly:
 * Some code is commented out
 
 * This is code for disabling our EC
-* Laptops users **SHOULD NOT** uncomment this
+* Laptops users SHOULD NOT uncomment this
 
 * There's a new EC called
 
@@ -191,9 +191,9 @@ Now when opening this SSDT, you'll notice a few things. Mainly:
 Device (EC)
 ```
 
-* **DO NOT RENAME THIS**, this will be the EC we give to macOS
+* DO NOT RENAME THIS, this will be the EC we give to macOS
 
-**Before**:
+Before:
 
 ```text
 External (_SB_.PCI0.LPCB, DeviceObj) <- Rename this
@@ -203,7 +203,7 @@ Scope (_SB.PCI0.LPCB) <- Rename this
 
 Following the example pathing we found, the SSDT should look something like this:
 
-**After**:
+After:
 
 ```text
 External (_SB_.PC00.LPC0, DeviceObj) <- Renamed
@@ -227,7 +227,7 @@ When this happens, you'll only need to create a "dummy" EC for macOS.
 
 Try searching for any devices named: "LPCB", "LPC0", "LPC", "SBRG", "PX40". If you have any of these, try using the LPC pathing of each of those device in place of the Embedded Controller's pathing.
 
-Note that **DO NOT** uncomment the EC disabling code as there are no devices that are considered "EC" in your machine.
+Note that DO NOT uncomment the EC disabling code as there are no devices that are considered "EC" in your machine.
 
 #### PNP0C09 already named `EC`
 Congrats! No need to create an SSDT-EC! However you will still want USBX if you're Skylake or newer.
@@ -257,21 +257,21 @@ Example of an EC with STA already:
 ### 2.13 ACPI quirks设置
 
 1. FadtEnableReset
-**Type**: plist boolean
-**Failsafe**: false
-**Description**: Provide reset register and flag in FADT table to enable reboot and shutdown.
+Type: plist boolean
+Failsafe: false
+Description: Provide reset register and flag in FADT table to enable reboot and shutdown.
 
 NOTE: Mainly required on legacy hardware and a few newer laptops. Can also fix power-button shortcuts. Not recommended unless required.
 
 2. NormalizeHeaders
-**Type**: plist boolean
-**Failsafe**: false
-**Description**: Cleanup ACPI header fields to workaround macOS ACPI implementation flaws that result in boot crashes. Reference: Debugging AppleACPIPlatform on 10.13 by Alex James (also known as theracermaster). The issue was fixed in macOS Mojave (10.14).
+Type: plist boolean
+Failsafe: false
+Description: Cleanup ACPI header fields to workaround macOS ACPI implementation flaws that result in boot crashes. Reference: Debugging AppleACPIPlatform on 10.13 by Alex James (also known as theracermaster). The issue was fixed in macOS Mojave (10.14).
 
 3. RebaseRegions
-**Type**: plist boolean
-**Failsafe**: false
-**Description**: Attempt to heuristically relocate ACPI memory regions. Not recommended.
+Type: plist boolean
+Failsafe: false
+Description: Attempt to heuristically relocate ACPI memory regions. Not recommended.
 
 ACPI tables are often generated dynamically by the underlying firmware implementation. Among the position- independent code, ACPI tables may contain the physical addresses of MMIO areas used for device configuration, typically grouped by region (e.g. OperationRegion). Changing firmware settings or hardware configuration, upgrading or patching the firmware inevitably leads to changes in dynamically generated ACPI code, which sometimes results in the shift of the addresses in the aforementioned OperationRegion constructions.
 
@@ -280,23 +280,23 @@ For this reason, the application of modifications to ACPI tables is extremely ri
 When nothing else helps, this option could be tried to avoid stalls at PCI Configuration Begin phase of macOS booting by attempting to fix the ACPI addresses. It is not a magic bullet however, and only works with the most typical cases. Do not use unless absolutely required as it can have the opposite effect on certain platforms and result in boot failures.
 
 4. ResetHwSig
-**Type**: plist boolean
-**Failsafe**: false
-**Description**: Reset FACS table HardwareSignature value to 0.
+Type: plist boolean
+Failsafe: false
+Description: Reset FACS table HardwareSignature value to 0.
 
 This works around firmware that fail to maintain hardware signature across the reboots and cause issues with waking from hibernation.
 
 5. ResetLogoStatus
-**Type**: plist boolean
-**Failsafe**: false
-**Description**: Reset BGRT table Displayed status field to false.
+Type: plist boolean
+Failsafe: false
+Description: Reset BGRT table Displayed status field to false.
 
 This works around firmware that provide a BGRT table but fail to handle screen updates afterwards.
 
 6. SyncTableIds
-**Type**: plist boolean
-**Failsafe**: false
-**Description**: Sync table identifiers with the SLIC table.
+Type: plist boolean
+Failsafe: false
+Description: Sync table identifiers with the SLIC table.
 
 This works around patched tables becoming incompatible with the SLIC table causing licensing issues in older Windows operating systems.
 
@@ -305,9 +305,9 @@ This works around patched tables becoming incompatible with the SLIC table causi
 ### 3.1 quirks
 
 1. AllowRelocationBlock
-**Type**: plist boolean
-**Failsafe**: false
-**Description**: Allows booting macOS through a relocation block.
+Type: plist boolean
+Failsafe: false
+Description: Allows booting macOS through a relocation block.
 
 The relocation block is a scratch buffer allocated in the lower 4 GB used for loading the kernel and related structures by EfiBoot on firmware where the lower memory region is otherwise occupied by (assumed) non-runtime data. Right before kernel startup, the relocation block is copied back to lower addresses. Similarly, all the other addresses pointing to the relocation block are also carefully adjusted. The relocation block can be used when:
 
@@ -320,52 +320,52 @@ This quirk requires ProvideCustomSlide to be enabled and typically also requires
 _Note_: While this quirk is required to run older macOS versions on platforms with used lower memory, it is not compatible with some hardware and macOS 11. In such cases, consider using EnableSafeModeSlide instead.
 
 2. AvoidRuntimeDefrag
-**Type**: plist boolean
-**Failsafe**: false
-**Description**: Protect from boot.efi runtime memory defragmentation.
+Type: plist boolean
+Failsafe: false
+Description: Protect from boot.efi runtime memory defragmentation.
 
 This option fixes UEFI runtime services (date, time, NVRAM, power control, etc.) support on firmware that uses SMM backing for certain services such as variable storage. SMM may try to access memory by physical addresses in non-SMM areas but this may sometimes have been moved by boot.efi. This option prevents boot.efi from moving such data.
 
 _Note_: Most types of firmware, apart from Apple and VMware, need this quirk.
 
 3. DevirtualiseMmio
-**Type**: plist boolean
-**Failsafe**: false
-**Description**: Remove runtime attribute from certain MMIO regions.
+Type: plist boolean
+Failsafe: false
+Description: Remove runtime attribute from certain MMIO regions.
 
 This quirk reduces the stolen memory footprint in the memory map by removing the runtime bit for known memory regions. This quirk may result in an increase of KASLR slides available but without additional measures,it is not necessarily compatible with the target board. This quirk typically frees between 64 and 256 megabytes of memory, present in the debug log, and on some platforms, is the only way to boot macOS, which otherwise fails with allocation errors at the bootloader stage.
 
 This option is useful on all types of firmware, except for some very old ones such as Sandy Bridge. On certain firmware, a list of addresses that need virtual addresses for proper NVRAM and hibernation functionality may be required. Use the MmioWhitelist section for this.
 
 4. DisableSingleUser
-**Type**: plist boolean
-**Failsafe**: false
-**Description**: Disable single user mode.
+Type: plist boolean
+Failsafe: false
+Description: Disable single user mode.
 
 This is a security option that restricts the activation of single user mode by ignoring the CMD+S hotkey and the -s boot argument. The behaviour with this quirk enabled is supposed to match T2-based model behaviour. Refer to this archived article to understand how to use single user mode with this quirk enabled.
 
 5. DisableVariableWrite
-**Type**: plist boolean
-**Failsafe**: false
-**Description**: Protect from macOS NVRAM write access.
+Type: plist boolean
+Failsafe: false
+Description: Protect from macOS NVRAM write access.
 
 This is a security option that restricts NVRAM access in macOS. This quirk requires OC_FIRMWARE_RUNTIME protocol implemented in OpenRuntime.efi.
 
 _Note_: This quirk can also be used as an ad hoc workaround for defective UEFI runtime services implementations that are unable to write variables to NVRAM and results in operating system failures.
 
 6. DiscardHibernateMap
-**Type**: plist boolean
-**Failsafe**: false
-**Description**: Reuse original hibernate memory map.
+Type: plist boolean
+Failsafe: false
+Description: Reuse original hibernate memory map.
 
 This option forces the XNU kernel to ignore a newly supplied memory map and assume that it did not change after waking from hibernation. This behaviour is required by Windows to work. Windows mandates preserving runtime memory size and location after S4 wake.
 
 _Note_: This may be used to workaround defective memory map implementations on older, rare legacy hardware. Examples of such hardware are Ivy Bridge laptops with Insyde firmware such as the Acer V3-571G. Do not use this option without a full understanding of the implications.
 
 7. EnableSafeModeSlide
-**Type**: plist boolean
-**Failsafe**: false
-**Description**: Patch bootloader to have KASLR enabled in safe mode.
+Type: plist boolean
+Failsafe: false
+Description: Patch bootloader to have KASLR enabled in safe mode.
 
 This option is relevant to users with issues booting to safe mode (e.g. by holding shift or with using the -x boot argument). By default, safe mode forces 0 slide as if the system was launched with the slide=0 boot argument.
 
@@ -375,36 +375,36 @@ This option is relevant to users with issues booting to safe mode (e.g. by holdi
 _Note_: The need for this option is dependent on the availability of safe mode. It can be enabled when booting to safe mode fails.
 
 8. EnableWriteUnprotector
-**Type**: plist boolean
-**Failsafe**: false
-**Description**: Permit write access to UEFI runtime services code.
+Type: plist boolean
+Failsafe: false
+Description: Permit write access to UEFI runtime services code.
 
 This option bypasses WˆX permissions in code pages of UEFI runtime services by removing write protection (WP) bit from CR0 register during their execution. This quirk requires OC_FIRMWARE_RUNTIME protocol implemented in OpenRuntime.efi.
 
 _Note_: This quirk may potentially weaken firmware security. Please use RebuildAppleMemoryMap if the firmware supports memory attributes table (MAT). Refer to the OCABC: MAT support is 1/0 log entry to determine whether MAT is supported.
 
 9. ForceBooterSignature
-**Type**: plist boolean
-**Failsafe**: false
-**Description**: Set macOS boot-signature to OpenCore launcher.
+Type: plist boolean
+Failsafe: false
+Description: Set macOS boot-signature to OpenCore launcher.
 
 Booter signature, essentially a SHA-1 hash of the loaded image, is used by Mac EFI to verify the authenticity of the bootloader when waking from hibernation. This option forces macOS to use OpenCore launcher SHA-1 hash as a booter signature to let OpenCore shim hibernation wake on Mac EFI firmware.
 
 _Note_: OpenCore launcher path is determined from LauncherPath property.
 
 10. ForceExitBootServices
-**Type**: plist boolean
-**Failsafe**: false
-**Description**: Retry ExitBootServices with new memory map on failure.
+Type: plist boolean
+Failsafe: false
+Description: Retry ExitBootServices with new memory map on failure.
 
 Try to ensure that the ExitBootServices call succeeds. If required, an outdated MemoryMap key argument can be used by obtaining the current memory map and retrying the ExitBootServices call.
 
 _Note_: The need for this quirk is determined by early boot crashes of the firmware. Do not use this option without a full understanding of the implications.
 
 11. ProtectMemoryRegions
-**Type**: plist boolean
-**Failsafe**: false
-**Description**: Protect memory regions from incorrect access.
+Type: plist boolean
+Failsafe: false
+Description: Protect memory regions from incorrect access.
 
 Some types of firmware incorrectly map certain memory regions:
 
@@ -417,18 +417,18 @@ This quirk attempts to fix the types of these regions, e.g. ACPI NVS for CSM or 
 _Note_: The need for this quirk is determined by artifacts, sleep wake issues, and boot failures. This quirk is typically only required by very old firmware.
 
 12. ProtectSecureBoot
-**Type**: plist boolean
-**Failsafe**: false
-**Description**: Protect UEFI Secure Boot variables from being written.
+Type: plist boolean
+Failsafe: false
+Description: Protect UEFI Secure Boot variables from being written.
 
 Reports security violation during attempts to write to db, dbx, PK, and KEK variables from the operating system.
 
 _Note_: This quirk attempts to avoid issues with NVRAM implementations with fragmentation issues, such as on the MacPro5,1 as well as on certain Insyde firmware without garbage collection or with defective garbage collection.
 
 13. ProtectUefiServices
-**Type**: plist boolean
-**Failsafe**: false
-**Description**: Protect UEFI services from being overridden by the firmware.
+Type: plist boolean
+Failsafe: false
+Description: Protect UEFI services from being overridden by the firmware.
 
 Some modern firmware, including on virtual machines such as VMware, may update pointers to UEFI services during driver loading and related actions. Consequently, this directly obstructs other quirks that affect memory management, such as DevirtualiseMmio, ProtectMemoryRegions, or RebuildAppleMemoryMap, and may also obstruct other quirks depending on the scope of such.
 
@@ -439,27 +439,27 @@ _Note 1_: On VMware, the need for this quirk may be determined by the appearance
 _Note 2_: This quirk is needed for correct operation if OpenCore is chainloaded from GRUB with BIOS Secure Boot enabled.
 
 14. ProvideCustomSlide
-**Type**: plist boolean
-**Failsafe**: false
-**Description**: Provide custom KASLR slide on low memory.
+Type: plist boolean
+Failsafe: false
+Description: Provide custom KASLR slide on low memory.
 
 This option performs memory map analysis of the firmware and checks whether all slides (from 1 to 255) can be used. As boot.efi generates this value randomly with rdrand or pseudo randomly rdtsc, there is a chance of boot failure when it chooses a conflicting slide. In cases where potential conflicts exist, this option forces macOS to select a pseudo random value from the available values. This also ensures that the slide= argument is never passed to the operating system (for security reasons).
 
 _Note_: The need for this quirk is determined by the OCABC: Only N/256 slide values are usable! message in the debug log.
 
 15. ProvideMaxSlide
-**Type**: plist integer
-**Failsafe**: 0
-**Description**: Provide maximum KASLR slide when higher ones are unavailable.
+Type: plist integer
+Failsafe: 0
+Description: Provide maximum KASLR slide when higher ones are unavailable.
 
 This option overrides the maximum slide of 255 by a user specified value between 1 and 254 (inclusive) when ProvideCustomSlide is enabled. It is assumed that modern firmware allocates pool memory from top to bottom, effectively resulting in free memory when slide scanning is used later as temporary memory during kernel loading. When such memory is not available, this option stops the evaluation of higher slides.
 
 _Note_: The need for this quirk is determined by random boot failures when ProvideCustomSlide is enabled and the randomized slide falls into the unavailable range. When AppleDebug is enabled, the debug log typically contains messages such as AAPL: [EB|‘LD:LKC] } Err(0x9). To find the optimal value, append slide=X, where X is the slide value, to the boot-args and select the largest one that does not result in boot failures.
 
 16. RebuildAppleMemoryMap
-**Type**: plist boolean
-**Failsafe**: false
-**Description**: Generate macOS compatible Memory Map.
+Type: plist boolean
+Failsafe: false
+Description: Generate macOS compatible Memory Map.
 
 The Apple kernel has several limitations on parsing the UEFI memory map:
 
@@ -473,7 +473,7 @@ _Note 1_: Since several types of firmware come with incorrect memory protection 
 
 _Note 2_ : The need for this quirk is determined by early boot failures. This quirk replaces EnableWriteUnprotector on firmware supporting Memory Attribute Tables (MAT). This quirk is typically unnecessary when using OpenDuetPkg but may be required to boot macOS 10.6, and earlier, for reasons that are as yet unclear.
 
-17. ResizeAppleGpuBars **Type**: plist integer
+17. ResizeAppleGpuBars Type: plist integer
 
 ```
 **Failsafe**: -1
@@ -491,25 +491,25 @@ _Example 1_: Setting ResizeAppleGpuBars to 1 GB will change BAR0 to 1 GB and lea
 _Note_: See ResizeGpuBars quirk for general GPU PCI BAR size configuration and more details about the technology.
 
 18. SetupVirtualMap
-**Type**: plist boolean
-**Failsafe**: false
-**Description**: Setup virtual memory at SetVirtualAddresses.
+Type: plist boolean
+Failsafe: false
+Description: Setup virtual memory at SetVirtualAddresses.
 
 Some types of firmware access memory by virtual addresses after a SetVirtualAddresses call, resulting in early boot crashes. This quirk workarounds the problem by performing early boot identity mapping of assigned virtual addresses to physical memory.
 
 _Note_: The need for this quirk is determined by early boot failures.
 
 19. SignalAppleOS
-**Type**: plist boolean
-**Failsafe**: false
-**Description**: Report macOS being loaded through OS Info for any OS.
+Type: plist boolean
+Failsafe: false
+Description: Report macOS being loaded through OS Info for any OS.
 
 This quirk is useful on Mac firmware, which loads different operating systems with different hardware configurations. For example, it is supposed to enable Intel GPU in Windows and Linux in some dual-GPU MacBook models.
 
 20. SyncRuntimePermissions
-**Type**: plist boolean
-**Failsafe**: false
-**Description**: Update memory permissions for the runtime environment.
+Type: plist boolean
+Failsafe: false
+Description: Update memory permissions for the runtime environment.
 
 Some types of firmware fail to properly handle runtime permissions:
 
@@ -554,15 +554,12 @@ _Note_: The need for this quirk is indicated by early boot failures (note: inclu
 
 1. 打开应用：`Hackintool.app`
 
-2. 通过菜单项：`缓冲帧`选择 `macOS 10.13.6` / `macOS 10.14`<a href='hackintosh-Inspiron3670-franksfc/FB-Select.png%3Fdownload=1'>FB-Select.png?download=1</a>FB-Select
-
+2. 通过菜单项：`缓冲帧`选择 `macOS 10.13.6` / `macOS 10.14`
 3. 选择显卡对应的处理器架构，比如
 
 * `Intel UHD Graphics 630`就需要选择`Coffee Lake`
 * `Intel HD Graphics 620`就需要选择`Kaby Lake`
 * `Intel HD Graphics 520`就需要选择`Skylake`，等等，
-
-<a href='hackintosh-Inspiron3670-franksfc/FB-1.png%3Fdownload=1'>FB-1.png?download=1</a>FB-1
 
 之后选择`平台 ID`，这个就是能正确驱动你的显卡的 ID，至于这个 ID 如何确定，请参考[黑苹果必备：Intel核显platform ID整理及smbios速查表](https://blog.daliansky.net/Intel-core-display-platformID-finishing.html) 并针对白苹果所使用的 ID 选取适合您的 `平台 ID`。
 
@@ -570,50 +567,40 @@ _Note_: The need for this quirk is indicated by early boot failures (note: inclu
 
 4. 点击`应用补丁`按钮，在`通用`选项中勾选`设备/属性`，`自动侦测变化`，`全部`，`接口`，`显存`这几个选项；
 
-<a href='hackintosh-Inspiron3670-franksfc/FB-2.png%3Fdownload=1'>FB-2.png?download=1</a>FB-2
-
 5. 在`高级`选项中勾选`DVMT pre-alloc 32 MB`，`显存 2048MB`，`禁用 eGPU`，`启用 HDMI20(4K)`，`将 DP 映射到 HDMI`，`FB 端口数限制`
 
-6. 勾选`设备`，选择`平台 ID` **相对应的** `设备 ID`，这通常跟你的显卡名称相吻合
+6. 勾选`设备`，选择`平台 ID` 相对应的 `设备 ID`，这通常跟你的显卡名称相吻合
 
 7. 点击`生成补丁`生成显卡驱动补丁
 
-<a href='hackintosh-Inspiron3670-franksfc/FB-3.png%3Fdownload=1'>FB-3.png?download=1</a>FB-3
-
 8. 通过菜单项：`文件` ▸ `导出` ▸ `Config.plist`，将该补丁无损注入到 Clover 的配置文件 Config.plist 中
-
-<a href='hackintosh-Inspiron3670-franksfc/FB-4.png%3Fdownload=1'>FB-4.png?download=1</a>FB-4
 
 #### 几个例子：
 
 * Coffee Lake（八代）平台：Intel UHD Graphics 630 (移动端)
 
-<a href='hackintosh-Inspiron3670-franksfc/3E9B-A.png%3Fdownload=1'>3E9B-A.png?download=1</a>3E9B-A
-<a href='hackintosh-Inspiron3670-franksfc/3E9B-B.png%3Fdownload=1'>3E9B-B.png?download=1</a>3E9B-B
-<a href='hackintosh-Inspiron3670-franksfc/3E9B-C.png%3Fdownload=1'>3E9B-C.png?download=1</a>3E9B-C
-
 * Kabe Lake（七代）平台：Intel HD Graphics 620 / Intel UHD Graphics 620 (移动端)
 
 * CPU 架构：Kaby Lake
 * 平台 ID：`0x59160000`
-* **通用**和**高级**界面同上勾选
+* 通用和高级界面同上勾选
 * 仿冒图形卡 ID 选择：`0x5916: Intel Graphics 620`
 
 * Sky Lake（六代）平台：Intel HD Graphics 530 (移动端)
 
 * CPU 架构：Skylake
 * 平台 ID：`0x191B0000`
-* **通用**和**高级**界面同上勾选
+* 通用和高级界面同上勾选
 * 仿冒图形卡 ID 选择：`0x191B: Intel Graphics 530`
 
 * Haswell（四代）平台：Intel HD Graphics 4600 (移动端)
 
 * CPU 架构：Haswell
 * 平台 ID：`0x0A260006`
-* **通用**和**高级**界面同上勾选
+* 通用和高级界面同上勾选
 * 仿冒图形卡 ID 选择：`0x0A26: Intel Graphics 4600`
 
-* **注意⚠️：以上设置仅为较为通用的设置，对于某些设备，可能存在疏漏或者冗余**
+* 注意⚠️：以上设置仅为较为通用的设置，对于某些设备，可能存在疏漏或者冗余
 
 * [查看此处]((null))来利用 Hackintool 深度定制 Whatevergreen 补丁
 
@@ -621,20 +608,20 @@ _Note_: The need for this quirk is indicated by early boot failures (note: inclu
 
 ### 4.1.3利用Hackintool打开第8代核显HDMI/DVI输出的正确姿势
 
-> 本篇文章，适用于使用了较新主板并且搭配英特尔核显的用户。如果你的板载HDMI无法正常工作，那么可以参考本教程的方案来对你的HDMI进行缓冲帧修复从而修复HDMI输出 。  
+> 本篇文章，适用于使用了较新主板并且搭配英特尔核显的用户。如果你的板载HDMI无法正常工作，那么可以参考本教程的方案来对你的HDMI进行缓冲帧修复从而修复HDMI输出 。    
 
 #### 工作原理
-不同主板上的板载视频接口有许多不同的组合，有些是1个HDMI+2个DP，有些则是2个HDMI，还有可能是DVI和VGA。（**当然，VGA在MacOS里是不能使用的，请记住这点**）。
+不同主板上的板载视频接口有许多不同的组合，有些是1个HDMI+2个DP，有些则是2个HDMI，还有可能是DVI和VGA。（当然，VGA在MacOS里是不能使用的，请记住这点）。
 
-当MacOS初始化IGPU驱动（称为`AppleIntelFramebuffer`）时，它并不知道主板上的接口是什么类型的。但是，它会根据你选择的 平台 ID，作出默认假设。例如，对于 平台 ID `0x3E9B0007`，默认情况下它将所有接口视为DP接口，如果将DP显示器连接上，它就会立即工作。但是，如果将HDMI或DVI显示器连接上 ，就没有图像显示。 **这是因为此时MacOS认为这些显示器是DP接口的**。
+当MacOS初始化IGPU驱动（称为`AppleIntelFramebuffer`）时，它并不知道主板上的接口是什么类型的。但是，它会根据你选择的 平台 ID，作出默认假设。例如，对于 平台 ID `0x3E9B0007`，默认情况下它将所有接口视为DP接口，如果将DP显示器连接上，它就会立即工作。但是，如果将HDMI或DVI显示器连接上 ，就没有图像显示。 这是因为此时MacOS认为这些显示器是DP接口的。
 
-主板上每个视频接口都与其对应的接口号相关，彼此不同。而在MacOS中，最多允许核显连接3个外部显示器，接口号为`5`,`6`和`7`。我们所要做的，正是确定主板上什么接口连接到HDMI，什么接口连接到DVI，什么接口连接到DP，搞清接口号与物理接口的映射关系，然后填写缓冲帧表向MacOS提供映射信息。这种映射的接口也叫**cons**，任何软件接口都可以映射到这些接口。
+主板上每个视频接口都与其对应的接口号相关，彼此不同。而在MacOS中，最多允许核显连接3个外部显示器，接口号为`5`,`6`和`7`。我们所要做的，正是确定主板上什么接口连接到HDMI，什么接口连接到DVI，什么接口连接到DP，搞清接口号与物理接口的映射关系，然后填写缓冲帧表向MacOS提供映射信息。这种映射的接口也叫cons，任何软件接口都可以映射到这些接口。
 
-* 3个 **连接接口(connectors)** 名称分别为：
+* 3个 连接接口(connectors) 名称分别为：
 	* `con0`
 	* `con1`
 	* `con2`
-* 接口号5,6和7可以作为软件的**索引(Index)**，索引号分别为1,2和3。它们有如下对应关系：
+* 接口号5,6和7可以作为软件的索引(Index)，索引号分别为1,2和3。它们有如下对应关系：
 	* 索引号1(Index 1)始终指向物理接口5
 	* 索引号2(Index 2)始终指向物理接口6
 	* 索引号3(Index 3)始终指向物理接口7
@@ -642,25 +629,25 @@ _Note_: The need for this quirk is indicated by early boot failures (note: inclu
 例如：
 
 * 如果我们想告诉MacOS物理接口6是HDMI类型，我们就标记此接口的索引号为2。
-* 如果我们想告诉MacOS物理接口5是DVI类型，我们就标记标记此接口的索引号为1（**注意：DVI和HDMI在MacOS中等效**）。
+* 如果我们想告诉MacOS物理接口5是DVI类型，我们就标记标记此接口的索引号为1（注意：DVI和HDMI在MacOS中等效）。
 * 如果我们想告诉MacOS物理接口7是DP类型，我们就标记此接口的索引号为3。
 
 除了标记索引之外，我们还需要为每个索引指定一个`总线ID`。每种类型接口的`总线ID`值是有适用范围的，它们的可用范围见下表：
 
-**附表：接口类型和总线ID的对应表**
+附表：接口类型和总线ID的对应表
 
 |  DP  |   HDMI   | DVI  |
 | :--: | :------: | :--: |
-| 0x02 | **0x01** | 0x01 |
+| 0x02 | 0x01 | 0x01 |
 | 0x04 |   0x02   | 0x02 |
 | 0x05 |   0x04   | 0x04 |
 | 0x06 |   0x06   | 0x06 |
 
 在这里面
 
-* **DP**灵活多变，允许使用`总线ID` 有0x02,0x04,0x05,0x06，每个值理论上适用于任何主板。
-* **HDMI**非常严格，只允许使用以下`总线ID`: 0x01,0x02,0x04,0x06，而且部分主板只接受这些值中的一种或两种。例如，技嘉 Z390只接受0x04。
-* **DVI**与**HDMI**相同，使用相同的`总线ID`，甚至使用相同的`类型`。
+* DP灵活多变，允许使用`总线ID` 有0x02,0x04,0x05,0x06，每个值理论上适用于任何主板。
+* HDMI非常严格，只允许使用以下`总线ID`: 0x01,0x02,0x04,0x06，而且部分主板只接受这些值中的一种或两种。例如，技嘉 Z390只接受0x04。
+* DVI与HDMI相同，使用相同的`总线ID`，甚至使用相同的`类型`。
 
 #### 准备开始
 接下来，我们首先要确定每个物理接口的类型。完成这个以后，其余部分的工作量会相对小些。我们要明确的有三个东西：
@@ -670,8 +657,6 @@ _Note_: The need for this quirk is indicated by early boot failures (note: inclu
 * 接口7（索引3）的类型
 
 如图所示
-
-[<a href='hackintosh-Inspiron3670-franksfc/Preparation.png%3Fdownload=1'>Preparation.png?download=1</a>Port to Index Mapping.png?download=1](https://pics.daliansky.net/d/xD0Ar91B/blog/Connectors-screen-shot/Preparation.png?download=1)
 
 然后整理出一个像这样的表格：
 
@@ -687,9 +672,9 @@ _Note_: The need for this quirk is indicated by early boot failures (note: inclu
 * 步骤1：确定物理接口类型
 * 步骤2：为每个索引分配总线ID和类型，数值请参照上面整理出的`接口类型和总线ID的对应表`
 
-**在开始之前要做的事情**
+在开始之前要做的事情
 
-1. 点击[这里](https://www.tonymacx86.com/threads/release-hackintool-v1-7-7.254559/)下载**Hackintool**。
+1. 点击[这里](https://www.tonymacx86.com/threads/release-hackintool-v1-7-7.254559/)下载Hackintool。
 
 2. 安装`Lilu`和`WhateverGreen`
 
@@ -703,9 +688,6 @@ _Note_: The need for this quirk is indicated by early boot failures (note: inclu
  - `Devices` ▸ `Fake ID` ▸ `IntelGFX` ▸ 输入适当的设备ID（例如`0x3E9B8086`）
 ```
 
-```
-   [![FakeID_3E9B8086.png?download=1](https://pics.daliansky.net/d/xD0Ar91B/blog/Hackintool/FakeID_3E9B8086.png?download=1)](https://pics.daliansky.net/d/xD0Ar91B/blog/Hackintool/FakeID_3E9B8086.png?download=1)
-```
 
 ```
  - `Graphics` ▸ 勾选 `Inject Intel`
@@ -715,9 +697,6 @@ _Note_: The need for this quirk is indicated by early boot failures (note: inclu
  - `Graphics` ▸ `ig-platform-id` ▸ 单击下拉菜单并选择适当的ID（例如`0x3E9B0007`）
 ```
 
-```
-   [![InjectIntel_3E9B0007.png?download=1](https://pics.daliansky.net/d/xD0Ar91B/blog/Hackintool/InjectIntel_3E9B0007.png?download=1)](https://pics.daliansky.net/d/xD0Ar91B/blog/Hackintool/InjectIntel_3E9B0007.png?download=1)
-```
 
 * 方法2：在`Clover Configurator`的`Devices`页面中添加自定义属性`Properties`
 
@@ -739,18 +718,16 @@ _Note_: The need for this quirk is indicated by early boot failures (note: inclu
 ```
 
 4. 对于大多数Coffee Lake桌面处理器，可注入设备ID 0x3E9B以及 平台ID 0x3E9B0007。当然，也可以参考此[framebuffer修补指南](https://www.tonymacx86.com/threads/guide-intel-framebuffer-patching-using-whatevergreen.256490/)来确定适合你的值，它将使你接口的驱动程序正常加载。如果显卡驱动的加速不能正常加载，这篇文章的内容将毫无意义；而那些将所有接口的索引号设置为 -1的任何 平台ID 叫做_无接口_Platform ID，这样的ID因为会把所有输出接口屏蔽，因此必须避免使用。例如Platform ID 0x3E920003就是这样的，如下所示：
-<a href='hackintosh-Inspiron3670-franksfc/Headless.png%3Fdownload=1'>Headless.png?download=1</a>Hackintool  -  Headless.png?download=1
 
 5. 显卡驱动的加速正常工作时，主板的HDMI和DVI接口不能工作。此时你必须将显示器连接到主板上工作正常的视频接口（比如DP，一般是笔记本）或者驱动独立显卡并将显示器连接到独立显卡上（台式机，能屏蔽核显的笔记本）。
 
-6. 运行Hackintool确定显卡的工作状况。如果**GPU信息**正确显示如下图所示，那么您就可以继续了。如果你看到**GPU：???** ，那么你就需要重新开始或者求助其他人。
-<a href='hackintosh-Inspiron3670-franksfc/GPU-info.png%3Fdownload=1'>GPU-info.png?download=1</a>Hackintool  -  GPU Info.png?download=1
+6. 运行Hackintool确定显卡的工作状况。如果GPU信息正确显示如下图所示，那么您就可以继续了。如果你看到GPU：??? ，那么你就需要重新开始或者求助其他人。
 
 7. 列出主板上的视频接口（如HDMI，DP，DVI），不包括VGA。
 
 8. 为测试每个视频接口，你需要为每种类型的视频接口准备显示器与连接线。当然没有的话也可以继续，但这会增加一些不确定因素。
 
-9. 确保显卡加速驱动正确加载后，从**config.plist中**清除以下设置（使用Clover Configurator来完成）但是**不要重新启动**：
+9. 确保显卡加速驱动正确加载后，从config.plist中清除以下设置（使用Clover Configurator来完成）但是不要重新启动：
 
 * Device ▸ Fake ID ▸ IntelGFX ▸ 清空该条目。
 * Graphics ▸ 🔲 Inject Intel ▸ 取消选中该复选框。
@@ -760,25 +737,17 @@ _Note_: The need for this quirk is indicated by early boot failures (note: inclu
 
 #### 准备工作
 
-1. 运行**Hackintool**。从顶部菜单栏中选择**缓冲帧**并选择**macOS 10.14**。
+1. 运行Hackintool。从顶部菜单栏中选择缓冲帧并选择macOS 10.14。
 
-<a href='hackintosh-Inspiron3670-franksfc/FB-Select.png%3Fdownload=1'>FB-Select.png?download=1</a>Hackintool  - 选择Framebuffer.png?download=1
-
-1. 从**应用补丁**菜单中，选择**应用当前补丁**，可看到其前面打钩（这个选项用于显示改动后的设置，不勾选在Hackintool中将不能看到更改）。那是因为您未标记 /`应用当前补丁`/。
-
-<a href='hackintosh-Inspiron3670-franksfc/FB-Patch.png%3Fdownload=1'>FB-Patch.png?download=1</a>Hackintool  -  Patch Menu.png?download=1
+1. 从应用补丁菜单中，选择应用当前补丁，可看到其前面打钩（这个选项用于显示改动后的设置，不勾选在Hackintool中将不能看到更改）。那是因为您未标记 /`应用当前补丁`/。
 
 注意：如果要查看以前应用的设置，只需再次选择 /`应用当前补丁`/。
 
 1. 选择合适的平台ID（不包括无意义平台ID）。
-<a href='hackintosh-Inspiron3670-franksfc/Headless.png%3Fdownload=1'>Headless.png?download=1</a>Hackintool  -  Headless Platform.png?download=1
-2. 这里我们以平台ID 0x3E9B0007为例。单击**Connectors**选项卡，程序列出了接口映射表 。我们可以在其中分配`Index`（索引号），`总线ID`，`通道`，`类型`和`标识符`。我们现在看到的就是`con0`，`con1`和`con2`的映射表，但此时它们的值没有意义。
-<a href='hackintosh-Inspiron3670-franksfc/3E9B0007.png%3Fdownload=1'>3E9B0007.png?download=1</a>Hackintool  - 3E9B0007.png?download=1
+
+2. 这里我们以平台ID 0x3E9B0007为例。单击Connectors选项卡，程序列出了接口映射表 。我们可以在其中分配`Index`（索引号），`总线ID`，`通道`，`类型`和`标识符`。我们现在看到的就是`con0`，`con1`和`con2`的映射表，但此时它们的值没有意义。
+
 3. 如果此时有显示器连接，其中一栏将红色突出显示。这里我使用的只有DP输出显示器，所以只会突出它，它显示红色这栏属于DP连接。接下来我需要确定它的接口号，只需要单击红色这栏并从窗口右下角读取接口号就行了。一个确定下来，就去确定第二个。我们现在知道了`接口5` - `索引1` 是DP输出，所以结果如下：
-
-<a href='hackintosh-Inspiron3670-franksfc/DP1.png%3Fdownload=1'>DP1.png?download=1</a>Hackintool  -  DP1 Highlight.png?download=1
-
-<a href='hackintosh-Inspiron3670-franksfc/DP-Port.png%3Fdownload=1'>DP-Port.png?download=1</a>Hackintool  -  DP1 Port.png?download=1
 
 #### 开始操作
 
@@ -788,9 +757,6 @@ _Note_: The need for this quirk is indicated by early boot failures (note: inclu
 
 3. Hackintool中的一栏将亮为红色。因为我的主板有两个DP接口，所以我现在从第一个接口上拔下电缆并将其插入第二个接口，此时另一栏就会亮为红色。接着，我们需要再次通过单击红色栏来确定接口号。我们可以看到，第二个DP接口的接口号为6。现在我们的修改如图所示：
 
-<a href='hackintosh-Inspiron3670-franksfc/DP2.png%3Fdownload=1'>DP2.png?download=1</a>Hackintool  -  DP2 Highlight.png?download=1
-
-<a href='hackintosh-Inspiron3670-franksfc/DP2-Port.png%3Fdownload=1'>DP2-Port.png?download=1</a>Hackintool  -  DP2 Port.png?download=1
 
 4. 由于我的主板只有3个视频接口，而且我知道我的HDMI输出无法正常工作，因此无需尝试连接HDMI电缆就可以得知信息。当然你也可以接上一个来验证你所期待的黑屏。通过这个排除过程，我们得出结论：
 
@@ -798,29 +764,21 @@ _Note_: The need for this quirk is indicated by early boot failures (note: inclu
 * 接口6（索引2）是DP输出
 * 接口7（索引3）_必然是_ HDMI
 
-5. 现在看下**类型**和**索引**这两列。我们看到所有三栏都被错误地设置为了 DP，索引号分别为1,2和3。前两个似乎没问题，但我们刚刚确定的索引3必然是HDMI，因此这个输出类型（Type）存在问题。
+5. 现在看下类型和索引这两列。我们看到所有三栏都被错误地设置为了 DP，索引号分别为1,2和3。前两个似乎没问题，但我们刚刚确定的索引3必然是HDMI，因此这个输出类型（Type）存在问题。
 
-6. 此时，我们从下拉菜单中将索引3的**类型** 更正为**HDMI**并将其**总线ID**设置为**0x04**。为什么我们选择了0x04呢？确实，总线ID还有其它可能的值，但我们需要从某处开始并一次测试一种可能性。由于总线ID 0x04当前已分配给索引2，因此我们在它们之间交换一下值。让索引2使用总线ID 0x06（这是DP的有效总线ID之一），索引3使用0x04。此时结果如下：
+6. 此时，我们从下拉菜单中将索引3的类型 更正为HDMI并将其总线ID设置为0x04。为什么我们选择了0x04呢？确实，总线ID还有其它可能的值，但我们需要从某处开始并一次测试一种可能性。由于总线ID 0x04当前已分配给索引2，因此我们在它们之间交换一下值。让索引2使用总线ID 0x06（这是DP的有效总线ID之一），索引3使用0x04。此时结果如下：
 
-<a href='hackintosh-Inspiron3670-franksfc/HDMI1.png%3Fdownload=1'>HDMI1.png?download=1</a>Hackintool  -  HDMI Parameters.png?download=1<a href='hackintosh-Inspiron3670-franksfc/HDMI2.png%3Fdownload=1'>HDMI2.png?download=1</a>Hackintool  -  HDMI Parameters.png?download=1
+7. 然后我们测试下变化。单击应用补丁选项卡，并在显示的选择通用和高级子选项卡：（我这里用的Coffee Lake处理器，所以_设备ID_在_高级_子选项卡应设置为_0x3E9B：Intel UHD Graphics 630_。你得根据自己的CPU 选择最合适的_设备ID_。）
 
-7. 然后我们测试下变化。单击**应用补丁**选项卡，并在显示的选择**通用**和**高级**子选项卡：（我这里用的Coffee Lake处理器，所以_设备ID_在_高级_子选项卡应设置为_0x3E9B：Intel UHD Graphics 630_。你得根据自己的CPU 选择最合适的_设备ID_。）
-<a href='hackintosh-Inspiron3670-franksfc/General.png%3Fdownload=1'>General.png?download=1</a>Hackintool  -  Patch General.png?download=1
-<a href='hackintosh-Inspiron3670-franksfc/Advanced.png%3Fdownload=1'>Advanced.png?download=1</a>Hackintool  -  Patch Advanced.png?download=1
+8. 有时Hackintool会因为某些复选框的变化而重置接口设置的界面。因此，请在此时返回 接口 页面，再次检查您的设置是否完全正确并对错误项作出修正。然后返回 应用补丁页面，单击 生成补丁。
 
-8. 有时Hackintool会因为某些复选框的变化而重置接口设置的界面。因此，请在此时返回 **接口** 页面，再次检查您的设置是否完全正确并对错误项作出修正。然后返回 **应用补丁**页面，单击 **生成补丁**。
-<a href='hackintosh-Inspiron3670-franksfc/Generate.png%3Fdownload=1'>Generate.png?download=1</a>Hackintool  -  Patch Generate.png?download=1
+9. 接着，我们挂载四叶草的EFI分区（用Clover configurator或是其他方法），然后从Hackintool菜单栏中选择文件 ▸ 导出 ▸ Clover config.plist，如下所示：
 
-9. 接着，我们挂载四叶草的EFI分区（用Clover configurator或是其他方法），然后从Hackintool菜单栏中选择**文件 ▸ 导出 ▸ Clover config.plist**，如下所示：
-
-<a href='hackintosh-Inspiron3670-franksfc/Output.png%3Fdownload=1'>Output.png?download=1</a>Hackintool  - 文件导出补丁到config.png?download=1
-
-10. 从出现的文件浏览器中，定位到四叶草的**config.plist**。Hackintool将**自动**备份现有文件，并以毫无破坏性的方式将补丁直接注入config.plist。
+10. 从出现的文件浏览器中，定位到四叶草的config.plist。Hackintool将自动备份现有文件，并以毫无破坏性的方式将补丁直接注入config.plist。
 
 11. 接下来重启系统。当Mojave启动时，登录进入系统并将主板的HDMI接口连接到显示器上的HDMI输入，测试其输出是否正常。此时它可能不会工作，但如果工作，我们就完成了修改。
 
-12. 如果HDMI（或DVI）无法正常工作，那么继续尝试使用其它允许的总线ID。再次运行**Hackintool**，选择**缓冲帧** ▸ **macOS 10.14**并验证**应用补丁** ▸ **应用当前补丁**被正确勾选。然后重复步骤5到13，但要使用以下列出的不同总线ID：
-<a href='hackintosh-Inspiron3670-franksfc/BusID.png%3Fdownload=1'>BusID.png?download=1</a>允许总线IDs.png?download=1
+12. 如果HDMI（或DVI）无法正常工作，那么继续尝试使用其它允许的总线ID。再次运行Hackintool，选择缓冲帧 ▸ macOS 10.14并验证应用补丁 ▸ 应用当前补丁被正确勾选。然后重复步骤5到13，但要使用以下列出的不同总线ID：
 
 13. 如果您的视频接口少于3个，有两个方案可用于禁用未使用的索引。方案1是将索引号设置为-1。方案2是保持索引值不变，但将总线ID设置为0x00。根据一些用户反馈，方案2可能是值得最先尝试的。例如，如果您在接口0x07（索引3）处有一个HDMI，您可以尝试下面的任意配置。
 
@@ -844,7 +802,6 @@ Index -1: 总线ID 0x00, 类型 DUMMY
 ```
 
 1. 为了减少显卡故障并防止一些（罕见的）引导故障，建议启用`disablegfxfirmware`复选框，如图所示。
-<a href='hackintosh-Inspiron3670-franksfc/disablegfxfirmware.png%3Fdownload=1'>disablegfxfirmware.png?download=1</a>CC  -  disablegfxfirmware.png?download=1
 
 #### 收尾工作
 这个工作相对简单，因为默认情况下三个接口中的两个已经配置正确，而且几乎没有什么变化情况。但是，如果连接另一个视频接口时没有亮起怎么办？在这种情况下，你就必须不断尝试各种组合。如果其中一个接口是默认已知的，那么你就只需要再知道一个或两个接口的值。
@@ -853,9 +810,6 @@ Index -1: 总线ID 0x00, 类型 DUMMY
 
 成功启用HDMI（或DVI）后，我们可以再次运行Hackintool来检查接口号。首先，我们看到标记为HDMI的栏现在亮为红色（第一栏是我们的DP连接），并且如果我们点击HDMI栏本身，我们可以确认接口号确实是0x07。 这样，我们的 工作就结束了。
 
-<a href='hackintosh-Inspiron3670-franksfc/Trouble1.png%3Fdownload=1'>Trouble1.png?download=1</a>Hackintool  -  Trouble1.png?download=1
-
-<a href='hackintosh-Inspiron3670-franksfc/Trouble2.png%3Fdownload=1'>Trouble2.png?download=1</a>Hackintool  -  Trouble2.png?download=1
 
 ### 4.1.3 直接在DeviceProperties中注入属性
 很多小伙伴问我核显怎么驱动，为什么我驱动了HD4600却只有7m缓存，我开机花屏难受等等。。。
@@ -866,8 +820,6 @@ Index -1: 总线ID 0x00, 类型 DUMMY
 
 ##### 清理以前的驱动→获取 IGPU 的设备路径→填入ig-platform-id→填入device-id
 不要被本文的长度吓到了，举个例子：驱动完HD4600也就这点东西：
-
-[![](hackintosh-Inspiron3670-franksfc/FB_Final.png)img](https://files.zuiyu1818.cn/Mac/FB_Final.png)
 
 或者可以查看[精简版本](https://blog.zuiyu1818.cn/posts/Hac_Intel_Graphics_simple.html)
 
@@ -880,7 +832,6 @@ Index -1: 总线ID 0x00, 类型 DUMMY
 #### 软件界面
 出现这种界面，则是使用Xcode打开的Plist文件，若你觉得Xcode太大不想安装，也可以选择[PlistEdit Pro](https://www.fatcatsoftware.com/plisteditpro/)
 
-[![](hackintosh-Inspiron3670-franksfc/Xcode_Graphics_disable.png)Xcode](https://files.zuiyu1818.cn/Mac/Xcode_Graphics_disable.png)
 
 [Xcode](https://files.zuiyu1818.cn/Mac/Xcode_Graphics_disable.png)
 
@@ -899,8 +850,6 @@ Index -1: 总线ID 0x00, 类型 DUMMY
 #### DATA数据填入
 由于Clover的特性，所有的DATA类型数据都必须两两一组倒序填入，例如：`0x0A160000`转换之后就是`0000160A`，如下图：
 
-[![](hackintosh-Inspiron3670-franksfc/WEG_framebuffer_patch.png)img](https://files.zuiyu1818.cn/Mac/WEG_framebuffer_patch.png)
-
 #### 为什么要使用Lilu + WhateverGreen
 随着`macOS Mojave`的发行，之前的通过`Clover` ▸ `KextsToPatch` 通过修补帧缓冲的方法已经失效了，尤其是 `SkyLake` 及以后架构。您现在必须使用 `Lilu` + `WhateverGreen`+`FB Patcher` 的方式来驱动您的显卡。
 
@@ -910,7 +859,7 @@ WhateverGreen将取代Lilu的所有其他视频补丁插件，它目前已经合
 
 1. 修正有关设备的 ACPI 名称（核显自身名为 IGPU，英特尔® 管理引擎（英文缩写: IMEI）名为 IMEI）。
 2. 如若必要，将 核显 / IMEI 的 设备 ID 仿冒为合适的型号。
-3. 指定正确的缓冲帧。（**英文: Framebuffer, 下文简称 缓冲帧 为 FB**）（即 AAPL,ig-platform-id（适用于 Ivy Bridge 或更新微架构）或 AAPL,snb-platform-id（仅适用于 Sandy Bridge 微架构）) 一组正确的 FB 应当正确地包含了可用的输出端口以及该核显的其他属性。
+3. 指定正确的缓冲帧。（英文: Framebuffer, 下文简称 缓冲帧 为 FB）（即 AAPL,ig-platform-id（适用于 Ivy Bridge 或更新微架构）或 AAPL,snb-platform-id（仅适用于 Sandy Bridge 微架构）) 一组正确的 FB 应当正确地包含了可用的输出端口以及该核显的其他属性。
 4. 某些与核显相关的其他设备中已包含相关属性。
 
 其中，第 1 步和第 4 步由 WhateverGreen 自动完成。其可运行在 macOS 10.8 及更高版本，这大大简化了正确启用核显的步骤。
@@ -918,8 +867,6 @@ WhateverGreen将取代Lilu的所有其他视频补丁插件，它目前已经合
 #### 准备工作
 
 1. 在 BIOS 中设置核显所需的内存量（即 预分配 DVMT，英文: DVMT Pre-Allocated）为 32 MB, 64 MB, 96 MB 等，与使用的 FB 值相关。如要使用最大值（英文: DVMT Total），请设为 MAX。
-
-[![](hackintosh-Inspiron3670-franksfc/bios.png)BIOS设置](https://files.zuiyu1818.cn/Mac/bios.png)
 
 [BIOS设置](https://files.zuiyu1818.cn/Mac/bios.png)
 
@@ -936,7 +883,7 @@ WhateverGreen将取代Lilu的所有其他视频补丁插件，它目前已经合
 * NvidiaGraphicsFixup
 * Shiki
 
-> 这些驱动文件通常位于Clover的`kexts/Other`文件夹中  
+> 这些驱动文件通常位于Clover的`kexts/Other`文件夹中    
 
 3. 关闭所有Clover中的显卡注入
 
@@ -946,18 +893,13 @@ WhateverGreen将取代Lilu的所有其他视频补丁插件，它目前已经合
 * config.plist ▸ Graphics ▸ ig-platform-id = `清空`
 * config.plist ▸ Devices ▸ FakeID ▸ IntelGFX = `清空`
 
-[![](hackintosh-Inspiron3670-franksfc/Clover_Graphics_disable.png)关闭Graphics显卡注入](https://files.zuiyu1818.cn/Mac/Clover_Graphics_disable.png)
 
 [关闭Graphics显卡注入](https://files.zuiyu1818.cn/Mac/Clover_Graphics_disable.png)
 
-[![](hackintosh-Inspiron3670-franksfc/Clover_Graphics_disable.png)关闭Device中的显卡注入](https://files.zuiyu1818.cn/Mac/Clover_Graphics_disable.png)
 
 [关闭Device中的显卡注入](https://files.zuiyu1818.cn/Mac/Clover_Graphics_disable.png)
 
 如果你还不确定还可以打开plist文件查看是否显示为NO
-
-[![](hackintosh-Inspiron3670-franksfc/Xcode_Graphics_disable.png)Xcode](https://files.zuiyu1818.cn/Mac/Xcode_Graphics_disable.png)
-
 [Xcode](https://files.zuiyu1818.cn/Mac/Xcode_Graphics_disable.png)
 
 4. 禁用Clover中Apci的以下DSDT补丁
@@ -968,23 +910,10 @@ WhateverGreen将取代Lilu的所有其他视频补丁插件，它目前已经合
 * AddIMEI
 * FixHDA
 
-[![](hackintosh-Inspiron3670-franksfc/Clover_Acpi_DSDT.png)关闭DSDT补丁](https://files.zuiyu1818.cn/Mac/Clover_Acpi_DSDT.png)
-
-[关闭DSDT补丁](https://files.zuiyu1818.cn/Mac/Clover_Acpi_DSDT.png)
-
-[![](hackintosh-Inspiron3670-franksfc/Clover_Acpi_DSDT2.png)关闭DSDT补丁](https://files.zuiyu1818.cn/Mac/Clover_Acpi_DSDT2.png)
-
-[关闭DSDT补丁](https://files.zuiyu1818.cn/Mac/Clover_Acpi_DSDT2.png)
-
 5. 关闭Clover中Devices的`UseIntelHDMI`
-
-[![](hackintosh-Inspiron3670-franksfc/Clover_Devices_UseInterHDMIpng.png)关闭UseIntelHDMI](https://files.zuiyu1818.cn/Mac/Clover_Devices_UseInterHDMIpng.png)
-
-[关闭UseIntelHDMI](https://files.zuiyu1818.cn/Mac/Clover_Devices_UseInterHDMIpng.png)
 
 6. 删除引导参数：`-disablegfxfirmware`
 
-[![](hackintosh-Inspiron3670-franksfc/Clover_boot_HD.png)删除引导参数](https://files.zuiyu1818.cn/Mac/Clover_boot_HD.png)
 
 [删除引导参数](https://files.zuiyu1818.cn/Mac/Clover_boot_HD.png)
 
@@ -994,13 +923,10 @@ WhateverGreen将取代Lilu的所有其他视频补丁插件，它目前已经合
 * config.plist ▸ Devices ▸ Properties
 * config.plist ▸ Devices ▸ AddProperties
 
-[![](hackintosh-Inspiron3670-franksfc/Clover_Device_IGPU.png)删除IGPU](https://files.zuiyu1818.cn/Mac/Clover_Device_IGPU.png)
 
 [删除IGPU](https://files.zuiyu1818.cn/Mac/Clover_Device_IGPU.png)
 
 8. 删除或禁用以下 ACPI 重命名补丁: `GFX0 to IGPU`, `PEGP to GFX0`, `HECI to IMEI`, `MEI to IMEI`, `HDAS to HDEF`, `B0D3 to HDAU`
-
-[![](hackintosh-Inspiron3670-franksfc/Clover_Acpi_Patch.png)禁用Acpi补丁](https://files.zuiyu1818.cn/Mac/Clover_Acpi_Patch.png)
 
 [禁用Acpi补丁](https://files.zuiyu1818.cn/Mac/Clover_Acpi_Patch.png)
 
@@ -1009,7 +935,7 @@ WhateverGreen将取代Lilu的所有其他视频补丁插件，它目前已经合
 #### 添加Lilu + WhateverGreen驱动
 下载[Lilu](https://github.com/acidanthera/Lilu) 和 [WhateverGreen](https://github.com/acidanthera/WhateverGreen)驱动，选择release版本，解压并将.kext文件置于Clover的`kexts/Other`文件夹中
 
-> 若你想要查看调试输出信息，请选择两者的的debug版本  
+> 若你想要查看调试输出信息，请选择两者的的debug版本    
 
 #### 获取IGPU的设备路径
 下载并使用[gfxutil](https://github.com/acidanthera/gfxutil/releases)工具，将gfxutil文件解压至桌面，打开终端输入如下代码：
@@ -1032,7 +958,7 @@ DevicePath = PciRoot(0x0)/Pci(0x2,0x0)
 * 设备 `IMEI` 的 `device-id`（需要仿冒时）
 * 部分补丁设定（必要时）
 
-> 注意逗号区分中英文！！！  
+> 注意逗号区分中英文！！！    
 上述属性应使用十六进制代码表示，并且需要 两两一组 倒序 输入。如 `0x0A260006` 应该用 `0600260A` 表示
 
 ##### 很多人问倒序怎么倒的，这里画个图解释一下
@@ -1041,26 +967,18 @@ DevicePath = PciRoot(0x0)/Pci(0x2,0x0)
 0x`指16进制，在这咱可以不管，提取出后面的`0A260006`，两两一组`0A 26 00 06`过程如下图所示，最终得到`0600260A
 ```
 
-[![](hackintosh-Inspiron3670-franksfc/daoxu.jpg)img](https://files.zuiyu1818.cn/Mac/daoxu.jpg)
-
 下面分别提供了适用于不同微架构的常用 `IGPU` 和 `IMEI` 属性模版。
-
-[![](hackintosh-Inspiron3670-franksfc/FB_template_xcode.png)Xcode](https://files.zuiyu1818.cn/Mac/FB_template_xcode.png)
 
 [Xcode](https://files.zuiyu1818.cn/Mac/FB_template_xcode.png)
 
-[![](hackintosh-Inspiron3670-franksfc/FB_template_Clover.png)clover中的设置](https://files.zuiyu1818.cn/Mac/FB_template_Clover.png)
-
 [clover中的设置](https://files.zuiyu1818.cn/Mac/FB_template_Clover.png)
 
-> 如果某个属性不是必需的，请完全删除掉；如果某个 `PciRoot` 位置不存在，也请彻底删除！  
-**选择一个适合的 FB。** 首先试试推荐值，如果失败，则逐个尝试其他值.在寻找合适的 FB 时，可以临时通过启动参数设置，此时 `Properties` 部分中的 FB 设置将被忽略。如: `igfxframe=0x0166000B`
-
-[![](hackintosh-Inspiron3670-franksfc/Clover_Boot_Graphics.png)启动参数设置igfxframe](https://files.zuiyu1818.cn/Mac/Clover_Boot_Graphics.png)
+> 如果某个属性不是必需的，请完全删除掉；如果某个 `PciRoot` 位置不存在，也请彻底删除！    
+选择一个适合的 FB。 首先试试推荐值，如果失败，则逐个尝试其他值.在寻找合适的 FB 时，可以临时通过启动参数设置，此时 `Properties` 部分中的 FB 设置将被忽略。如: `igfxframe=0x0166000B`
 
 [启动参数设置igfxframe](https://files.zuiyu1818.cn/Mac/Clover_Boot_Graphics.png)
 
-**注意！** 此处格式与 `Properties` 部分的格式不同，这里应正序 输入并保留 `0x` 前缀，如上例所示。
+注意！ 此处格式与 `Properties` 部分的格式不同，这里应正序 输入并保留 `0x` 前缀，如上例所示。
 
 * 如未指定 FB，将会使用默认值；
 
@@ -1078,16 +996,10 @@ _推荐的 FB 配置_：
 
 通常 SNB 平台无需指定 FB，与 `board-id` 相对应的一组 FB 将会被自动使用。不过，在使用不基于 SNB 平台的 SMBios 时，则需指定 FB。（如使用 `HD 3000` + 基于 `Ivy Bridge` 平台的 `MacBookPro9,1` 时，则需指定 FB）
 
-[![](hackintosh-Inspiron3670-franksfc/FB_HD2000.png)img](https://files.zuiyu1818.cn/Mac/FB_HD2000.png)
-
-> 注意！为 SNB 平台指定 FB 时，属性名应为 `AAPL,snb-platform-id`，这与其他平台不同。  
+> 注意！为 SNB 平台指定 FB 时，属性名应为 `AAPL,snb-platform-id`，这与其他平台不同。    
 对于桌面版，需设定（仿冒）`device-id` 为 `26010000`。
 
-[![](hackintosh-Inspiron3670-franksfc/FB_HD2000_desk.png)img](https://files.zuiyu1818.cn/Mac/FB_HD2000_desk.png)
-
 在基于 [7 系列芯片组](https://ark.intel.com/content/www/cn/zh/ark/products/series/98460/intel-7-series-chipsets.html?_ga=2.100876037.569501178.1553421075-527540512.1553334841) 的主板上使用基于 `SNB` 微架构的处理器时（如在 `Z77` 芯片组上使用基于 `SNB` 微架构的 `i7-2600` 时），需设定（仿冒）`IMEI` 的 `device-ID` 为 `3A1C0000`。
-
-[![](hackintosh-Inspiron3670-franksfc/FB_HD2000_Z77.png)img](https://files.zuiyu1818.cn/Mac/FB_HD2000_Z77.png)
 
 #### HD 2500/4000（[Ivy Bridge]((null)) 微架构，下文简称 Ivy）
 支持 macOS 10.8 或更新版本。
@@ -1102,8 +1014,6 @@ _推荐的 FB 设置_：
 
 在基于 [6 系列芯片组](https://ark.intel.com/content/www/cn/zh/ark/products/series/98461/intel-6-series-chipsets.html?_ga=2.2193906.333725926.1553422863-527540512.1553334841) 的主板上使用基于 `Ivy` 微架构的处理器时（如在 `Z68` 芯片组上使用基于 `Ivy` 微架构的 `i7-3770` 时），需设定（仿冒）`IMEI` 的 `device-ID` 为 `3A1E0000`。（如下所示）
 
-[![](hackintosh-Inspiron3670-franksfc/FB_HD2500.png)img](https://files.zuiyu1818.cn/Mac/FB_HD2500.png)
-
 #### Intel HD Graphics 4200-5200（[Haswell]((null)) 微架构）
 支持 macOS 10.9 或更新版本。
 
@@ -1115,8 +1025,6 @@ _推荐的 FB 设置_：
 * 0x0A260006（移动版，推荐）
 
 对于 桌面版 HD 4400 以及_所有_移动版核显，需设定（仿冒）`IGPU` 的 `device-id` 为 `12040000`。
-
-[![](hackintosh-Inspiron3670-franksfc/FB_HD4600.png)img](https://files.zuiyu1818.cn/Mac/FB_HD4600.png)
 
 #### HD 5300-6300（[Broadwell]((null)) 微架构，下文简称 BDW）
 支持 macOS 10.10.2 或更新版本。
@@ -1145,8 +1053,6 @@ _推荐的 FB 设置_：
 
 对于 UHD 620 ([Kaby Lake Refresh](https://en.wikipedia.org/wiki/Kaby_Lake#List_of_8th_generation_Kaby_Lake_R_processors)需设定（仿冒）`IGPU` 的 `device-id` 为 `16590000`
 
-[![](hackintosh-Inspiron3670-franksfc/FB_UHD620.png)img](https://files.zuiyu1818.cn/Mac/FB_UHD620.png)
-
 #### UHD 630（[Coffee Lake]((null)) 微架构，下文简称 CFL）
 支持 macOS 10.14 或更新版本。
 
@@ -1157,8 +1063,6 @@ _推荐的 FB 设置_：
 注意：使用第九代 Coffee Lake R 处理器时，需设定（仿冒）`IGPU` 的 `device-id` 为 `923E0000`。（如下所示）
 
 _从 macOS Mojave 10.14.4 起，无需再设定此参数！_
-
-[![](hackintosh-Inspiron3670-franksfc/FB_UHD630.png)img](https://files.zuiyu1818.cn/Mac/FB_UHD630.png)
 
 #### 使用 WEG 自定义 FB 和 端口 补丁
 一般来说WhateverGreen会自动完成大部分工作，不需要任何额外的Framebuffer补丁。
@@ -1220,8 +1124,6 @@ N 为补丁索引号: 0, 1, 2, ... 9
 #### 部分补丁解释：
 再次重申，所有DATA数据类型需要将数据两两一组倒过来填入，例如：`0x16260006`转换之后就是这样`06002616`填入，如下图：
 
-[![](hackintosh-Inspiron3670-franksfc/WEG_framebuffer_patch.png)img](https://files.zuiyu1818.cn/Mac/WEG_framebuffer_patch.png)
-
 当设置内存大小时，你可能想知道DATA是怎么计算出来的。用framebuffer-fbmem参数举例，当需要设置为48M之后它应填入的值是：`00000003`，这个也是转换后的值，所以原来的值应当是`03000000`，这是一个16进制的数字，转换成10进制是`50331648`。我们知道1M=1024KB，1KB = 1024B，所以，我们把转换成十进制之后的数字`50331648`除以1024然后再除以1024，得出的结果就是48了，所以这串数字代表的就是48M。
 
 [点击这里前往进制转换网页](https://link.juejin.im/?target=https://tool.lu/hexconvert/)
@@ -1234,7 +1136,7 @@ N 为补丁索引号: 0, 1, 2, ... 9
  - HD630：`0x3E9B0000`
 ```
 
-2. `device-id`（设备id，可能是能让黑苹果正确显示设备信息，直接使用**无需倒序**）：
+2. `device-id`（设备id，可能是能让黑苹果正确显示设备信息，直接使用无需倒序）：
 
 ```
  - HD4600~HD5200：`12040000`
@@ -1315,9 +1217,7 @@ N 为补丁索引号: 0, 1, 2, ... 9
 10. `framebuffer-conN-index`（个人理解，显卡第N个输出接口的优先级，或者说是设置第N个输出口的位置）： 这个按个人需要设置，如果需要屏蔽这个输出口，可以设置成FFFFFFFF，也就是最大的数字，让它足够靠后，这样就达到了屏蔽效果！
 
 #### HDMI 高分屏 60 fps 方案
-为核显添加 `enable-hdmi20` 属性，或使用 `-cdfon` 启动参数代替，**否则将会黑屏**。
-
-[![](hackintosh-Inspiron3670-franksfc/WEG_HDMI20.png)img](https://files.zuiyu1818.cn/Mac/WEG_HDMI20.png)
+为核显添加 `enable-hdmi20` 属性，或使用 `-cdfon` 启动参数代替，否则将会黑屏。
 
 ### 4.1.4 1080p显示器过于模糊，如何开启hidpi
 #### 笔者经验：
@@ -1342,19 +1242,15 @@ HiDPi 因为牺牲像素点的原因，虽然看上去会比原来清晰，但�
 #### 开启 HiDPi 效果前
 ZenBoook 13 默认情况下的效果：
 
-[![](hackintosh-Inspiron3670-franksfc/16440471235590.png)img](https://image.3001.net/images/20220205/16440471235590.png)
-
 可以看到图片的字体还是比较模糊的，看着不是很舒服。
 
 #### 开启 HiDPi 效果后
 Zenbook 13 开启 HiDPi 后：
 
-[![](hackintosh-Inspiron3670-franksfc/16440471653893.png)img](https://image.3001.net/images/20220205/16440471653893.png)
-
 可以看到明显清晰了很多，看上去很清爽，虽然牺牲了一点分辨率，但是值！
 
 #### 如何开启 HiDPi
-实际上开启 HiDPi 并不复杂，有成熟的轮子工具可以使用了：**脚本的 Github 项目地址**: [GitHub - xzhih/one-key-hidpi: Enable macOS HiDPI](https://github.com/xzhih/one-key-hidpi)
+实际上开启 HiDPi 并不复杂，有成熟的轮子工具可以使用了：脚本的 Github 项目地址: [GitHub - xzhih/one-key-hidpi: Enable macOS HiDPI](https://github.com/xzhih/one-key-hidpi)
 
 只需要一条命令即可开启 HiDPi：
 
@@ -1373,12 +1269,9 @@ Copy
 国内的脚本是定期同步 Github 官方脚本的，主要代码转移到了国内的码云，基本上国内是可以很顺畅的使用的。
 
 #### 脚本使用细节一
-[![](hackintosh-Inspiron3670-franksfc/164404753673.png)img](https://image.3001.net/images/20220205/164404753673.png)
-
 上面是国光常用的选项，因为这是一个双屏笔记本，所以列出了 2 个显示器，如果你们外接显示器的话，这里也会显示 2 个显示器。另外选择显示器 ICON 图标这里大家也可以根据自己的喜好来。
 
 #### 脚本使用细节二
-[![](hackintosh-Inspiron3670-franksfc/16440475813360.png)img](https://image.3001.net/images/20220205/16440475813360.png)
 
 一般情况下 1080P 的显示器，分辨率配置这里选择 1 和 2 都可以，具体大家自己尝试看看。
 
@@ -1386,30 +1279,23 @@ Copy
 
 这个时候就得自己拿计算器算好分辨率了，最终驰为这个 笔记本的 HiDPi 分辨率为：
 
-**1920x1280 1620x1080 1380x920 1080x720**
+1920x1280 1620x1080 1380x920 1080x720
 
 其中在 1620x1080 面积会比较大，但是清晰度不及 1380x920，居然网友们可以根据自己的喜好来。
 
 #### 开启 HiDPi 的设置
-设置 - 显示器 里面选择**缩放**，可以看到开启 HiDPi 的显示器的效果，有小窗口的图标：
-
-[![](hackintosh-Inspiron3670-franksfc/16440478171055.png)img](https://image.3001.net/images/20220205/16440478171055.png)
+设置 - 显示器 里面选择缩放，可以看到开启 HiDPi 的显示器的效果，有小窗口的图标：
 
 不过有些显示器是没有这个小窗口的，不过这种情况下也会有 HiDPi 的文字提醒：
 
-[![](hackintosh-Inspiron3670-franksfc/16441642901658.png)img](https://image.3001.net/images/20220207/16441642901658.png)
 
 #### 没开 HiDPi 的设置
-没有开 HiDPi 的显示器选择**缩放**的话，只会通过文字形式（无 HiDPi 标识）列出来各个分辨率：
-
-[![](hackintosh-Inspiron3670-franksfc/16440479704621.png)img](https://image.3001.net/images/20220205/16440479704621.png)
+没有开 HiDPi 的显示器选择缩放的话，只会通过文字形式（无 HiDPi 标识）列出来各个分辨率：
 
 #### 开启 HiDPi 的缺点
 凡是必有利弊，除了开启 HiDPi 会牺牲分辨率（显示面积）以外，还会加重显卡负担，如果你的核显或者 CPU 本身性能就薄弱的话，就会造成明显的卡顿现象。
 
 说到这里有朋友肯定会问了？为啥会加重显卡负担呢？看下面这种开启 HiDPi 的图你就明白了：
-
-[![](hackintosh-Inspiron3670-franksfc/16440485575047.png)img](https://image.3001.net/images/20220205/16440485575047.png)
 
 因为 HiDPi 是牺牲分辨率换清晰度的，当你设置的 UI 分辨率要高一点的时候，必然需要更大的分辨率，原来的物理分辨率并不能满足，此时显卡会模拟输出更高的分辨率，这也就是 HiDPi 可能会造成系统卡顿的原因。（常见于核显，独显的话，无脑开启不会错）
 
@@ -1420,10 +1306,10 @@ Copy
 ### 5.2 Quirks
 
 1. AppleCpuPmCfgLock
-**Type**: plist boolean
-**Failsafe**: false
-**Requirement**: 10.4
-**Description**: Disables PKG_CST_CONFIG_CONTROL (0xE2) MSR modification in AppleIntelCPUPowerManage- ment.kext, commonly causing early kernel panic, when it is locked from writing.
+Type: plist boolean
+Failsafe: false
+Requirement: 10.4
+Description: Disables PKG_CST_CONFIG_CONTROL (0xE2) MSR modification in AppleIntelCPUPowerManage- ment.kext, commonly causing early kernel panic, when it is locked from writing.
 
 Some types of firmware lock the PKG_CST_CONFIG_CONTROL MSR register and the bundled ControlMsrE2 tool can be used to check its state. Note that some types of firmware only have this register locked on some cores. As modern firmware provide a CFG Lock setting that allows configuring the PKG_CST_CONFIG_CONTROL MSR register lock, this option should be avoided whenever possible.
 
@@ -1447,7 +1333,7 @@ it (e.g. 0x123).
 
 7. (g)  Enter setup_var 0x123 0x00 command, where 0x123 should be replaced by the actual offset, and reboot.
 
-**Warning**: Variable offsets are unique not only to each motherboard but even to its firmware version. Never ever
+Warning: Variable offsets are unique not only to each motherboard but even to its firmware version. Never ever
 
 try to use an offset without checking.
 On selected platforms, the ControlMsrE2 tool can also change such hidden options. Pass desired argument: lock,
@@ -1455,38 +1341,38 @@ On selected platforms, the ControlMsrE2 tool can also change such hidden options
 unlock for CFG Lock. Or pass interactive to find and modify other hidden options. As a last resort, consider patching the BIOS (for advanced users only).
 
 2. AppleXcpmCfgLock
-**Type**: plist boolean
-**Failsafe**: false
-**Requirement**: 10.8 (not required for older)
-**Description**: Disables PKG_CST_CONFIG_CONTROL (0xE2) MSR modification in XNU kernel, commonly causing early kernel panic, when it is locked from writing (XCPM power management).
+Type: plist boolean
+Failsafe: false
+Requirement: 10.8 (not required for older)
+Description: Disables PKG_CST_CONFIG_CONTROL (0xE2) MSR modification in XNU kernel, commonly causing early kernel panic, when it is locked from writing (XCPM power management).
 
 _Note_: This option should be avoided whenever possible. Refer to the AppleCpuPmCfgLock description for details.
 
 3. AppleXcpmExtraMsrs
-**Type**: plist boolean
-**Failsafe**: false
-**Requirement**: 10.8 (not required for older)
-**Description**: Disables multiple MSR access critical for certain CPUs, which have no native XCPM support.
+Type: plist boolean
+Failsafe: false
+Requirement: 10.8 (not required for older)
+Description: Disables multiple MSR access critical for certain CPUs, which have no native XCPM support.
 
 This is typically used in conjunction with the Emulate section on Haswell-E, Broadwell-E, Skylake-SP, and similar CPUs. More details on the XCPM patches are outlined in acidanthera/bugtracker#365.
 
 _Note_: Additional not provided patches will be required for Ivy Bridge or Pentium CPUs. It is recommended to use AppleIntelCpuPowerManagement.kext for the former.
 
 4. AppleXcpmForceBoost
-**Type**: plist boolean
-**Failsafe**: false
-**Requirement**: 10.8 (not required for older)
-**Description**: Forces maximum performance in XCPM mode.
+Type: plist boolean
+Failsafe: false
+Requirement: 10.8 (not required for older)
+Description: Forces maximum performance in XCPM mode.
 
 This patch writes 0xFF00 to MSR_IA32_PERF_CONTROL (0x199), effectively setting maximum multiplier for all the time.
 
 _Note_: While this may increase the performance, this patch is strongly discouraged on all systems but those explicitly dedicated to scientific or media calculations. Only certain Xeon models typically benefit from the patch.
 
 5. CustomPciSerialDevice
-**Type**: plist boolean
-**Failsafe**: false
-**Requirement**: 10.7
-**Description**: Performs change of PMIO register base address on a customised PCI serial device.
+Type: plist boolean
+Failsafe: false
+Requirement: 10.7
+Description: Performs change of PMIO register base address on a customised PCI serial device.
 
 The patch changes the PMIO register base address that the XNU kernel uses for serial input and output, from that of the default built-in COM1 serial port 0x3F8, to the base address stored in the first IO BAR of a specified PCI device or to a specific base address (e.g. 0x2F8 for COM2).
 
@@ -1502,61 +1388,61 @@ _Note 5_: The serial baud rate must be correctly set in both BaudRate under sect
 
 6. CustomSMBIOSGuid
 
-**Type**: plist boolean
+Type: plist boolean
 
-**Failsafe**: false
-**Requirement**: 10.4
-**Description**: Performs GUID patching for UpdateSMBIOSMode Custom mode. Usually relevant for Dell laptops.
+Failsafe: false
+Requirement: 10.4
+Description: Performs GUID patching for UpdateSMBIOSMode Custom mode. Usually relevant for Dell laptops.
 
 7. DisableIoMapper
-**Type**: plist boolean
-**Failsafe**: false
-**Requirement**: 10.8 (not required for older)
-**Description**: Disables IOMapper support in XNU (VT-d), which may conflict with the firmware implementation.
+Type: plist boolean
+Failsafe: false
+Requirement: 10.8 (not required for older)
+Description: Disables IOMapper support in XNU (VT-d), which may conflict with the firmware implementation.
 
 _Note 1_: This option is a preferred alternative to deleting DMAR ACPI table and disabling VT-d in firmware preferences, which does not obstruct VT-d support in other systems in case they need this.
 
 _Note 2_: Misconfigured IOMMU in the firmware may result in broken devices such as ethernet or Wi-Fi adapters. For instance, an ethernet adapter may cycle in link-up link-down state infinitely and a Wi-Fi adapter may fail to discover networks. Gigabyte is one of the most common OEMs with these issues.
 
 8. DisableLinkeditJettison
-**Type**: plist boolean
-**Failsafe**: false
-**Requirement**: 11
-**Description**: Disables __LINKEDIT jettison code.
+Type: plist boolean
+Failsafe: false
+Requirement: 11
+Description: Disables __LINKEDIT jettison code.
 
 This option lets Lilu.kext, and possibly other kexts, function in macOS Big Sur at their best performance levels without requiring the keepsyms=1 boot argument.
 
 9. DisableRtcChecksum
-**Type**: plist boolean
-**Failsafe**: false
-**Requirement**: 10.4
-**Description**: Disables primary checksum (0x58-0x59) writing in AppleRTC.
+Type: plist boolean
+Failsafe: false
+Requirement: 10.4
+Description: Disables primary checksum (0x58-0x59) writing in AppleRTC.
 
 _Note 1_: This option will not protect other areas from being overwritten, see RTCMemoryFixup kernel extension if this is desired.
 
 _Note 2_: This option will not protect areas from being overwritten at firmware stage (e.g. macOS bootloader), see AppleRtcRam protocol description if this is desired.
 
 10. ExtendBTFeatureFlags
-**Type**: plist boolean
-**Failsafe**: false
-**Requirement**: 10.8-11
-**Description**: Set FeatureFlags to 0x0F for full functionality of Bluetooth, including Continuity.
+Type: plist boolean
+Failsafe: false
+Requirement: 10.8-11
+Description: Set FeatureFlags to 0x0F for full functionality of Bluetooth, including Continuity.
 
 _Note_: This option is a substitution for BT4LEContinuityFixup.kext, which does not function properly due to late patching progress.
 
 11. ExternalDiskIcons
-**Type**: plist boolean
-**Failsafe**: false
-**Requirement**: 10.4
-**Description**: Apply icon type patches to AppleAHCIPort.kext to force internal disk icons for all AHCI disks.
+Type: plist boolean
+Failsafe: false
+Requirement: 10.4
+Description: Apply icon type patches to AppleAHCIPort.kext to force internal disk icons for all AHCI disks.
 
 _Note_: This option should be avoided whenever possible. Modern firmware typically have compatible AHCI controllers.
 
 12. ForceAquantiaEthernet
-**Type**: plist boolean
-**Failsafe**: false
-**Requirement**: 10.15.4
-**Description**: Enable Aquantia AQtion based 10GbE network cards support.
+Type: plist boolean
+Failsafe: false
+Requirement: 10.15.4
+Description: Enable Aquantia AQtion based 10GbE network cards support.
 
 This option enables Aquantia AQtion based 10GbE network cards support, which used to work natively before macOS 10.15.4.
 
@@ -1565,54 +1451,54 @@ _Note_: In order for Aquantia cards to properly function, DisableIoMapper must b
 _Note 2_: While this patch should enable ethernet support for all Aquantia AQtion series, it has only been tested on AQC-107s based 10GbE network cards.
 
 13. ForceSecureBootScheme
-**Type**: plist boolean
-**Failsafe**: false
-**Requirement**: 11
-**Description**: Force x86 scheme for IMG4 verification.
+Type: plist boolean
+Failsafe: false
+Requirement: 11
+Description: Force x86 scheme for IMG4 verification.
 
 _Note_: This option is required on virtual machines when using SecureBootModel different from x86legacy.
 
 14. IncreasePciBarSize
-**Type**: plist boolean
-**Failsafe**: false
-**Requirement**: 10.10
-**Description**: Allows IOPCIFamily to boot with 2 GB PCI BARs.
+Type: plist boolean
+Failsafe: false
+Requirement: 10.10
+Description: Allows IOPCIFamily to boot with 2 GB PCI BARs.
 
 Normally macOS restricts PCI BARs to 1 GB. Enabling this option (still) does not let macOS actually use PCI devices with larger BARs.
 
 _Note_: This option should be avoided whenever possible. A need for this option indicates misconfigured or defective firmware.
 
 15. LapicKernelPanic
-**Type**: plist boolean
-**Failsafe**: false
-**Requirement**: 10.6 (64-bit)
-**Description**: Disables kernel panic on LAPIC interrupts.
+Type: plist boolean
+Failsafe: false
+Requirement: 10.6 (64-bit)
+Description: Disables kernel panic on LAPIC interrupts.
 
 16. LegacyCommpage
-**Type**: plist boolean
-**Failsafe**: false
-**Requirement**: 10.4 - 10.6
-**Description**: Replaces the default 64-bit commpage bcopy implementation with one that does not require SSSE3, useful for legacy platforms. This prevents a commpage no match for last panic due to no available 64-bit bcopy functions that do not require SSSE3.
+Type: plist boolean
+Failsafe: false
+Requirement: 10.4 - 10.6
+Description: Replaces the default 64-bit commpage bcopy implementation with one that does not require SSSE3, useful for legacy platforms. This prevents a commpage no match for last panic due to no available 64-bit bcopy functions that do not require SSSE3.
 
 17. PanicNoKextDump
-**Type**: plist boolean
-**Failsafe**: false
-**Requirement**: 10.13 (not required for older)
-**Description**: Prevent kernel from printing kext dump in the panic log preventing from observing panic details. Affects 10.13 and above.
+Type: plist boolean
+Failsafe: false
+Requirement: 10.13 (not required for older)
+Description: Prevent kernel from printing kext dump in the panic log preventing from observing panic details. Affects 10.13 and above.
 
 18. PowerTimeoutKernelPanic
-**Type**: plist boolean
-**Failsafe**: false
-**Requirement**: 10.15 (not required for older)
-**Description**: Disables kernel panic on setPowerState timeout.
+Type: plist boolean
+Failsafe: false
+Requirement: 10.15 (not required for older)
+Description: Disables kernel panic on setPowerState timeout.
 
 An additional security measure was added to macOS Catalina (10.15) causing kernel panic on power change timeout for Apple drivers. Sometimes it may cause issues on misconfigured hardware, notably digital audio, which sometimes fails to wake up. For debug kernels setpowerstate_panic=0 boot argument should be used, which is otherwise equivalent to this quirk.
 
 19. ProvideCurrentCpuInfo
-**Type**: plist boolean
-**Failsafe**: false
-**Requirement**: 10.8 (10.14)
-**Description**: Provides current CPU info to the kernel.
+Type: plist boolean
+Failsafe: false
+Requirement: 10.8 (10.14)
+Description: Provides current CPU info to the kernel.
 
 This quirk works differently depending on the CPU:
 
@@ -1623,10 +1509,10 @@ This quirk works differently depending on the CPU:
 • For Intel CPUs it adds support for asymmetrical SMP systems (e.g. Intel Alder Lake) by patching core count to thread count along with the supplemental required changes (10.14+).
 
 20. SetApfsTrimTimeout
-**Type**: plist integer
-**Failsafe**: -1
-**Requirement**: 10.14 (not required for older)
-**Description**: Set trim timeout in microseconds for APFS filesystems on SSDs.
+Type: plist integer
+Failsafe: -1
+Requirement: 10.14 (not required for older)
+Description: Set trim timeout in microseconds for APFS filesystems on SSDs.
 
 The APFS filesystem is designed in a way that the space controlled via the spaceman structure is either used or free. This may be different in other filesystems where the areas can be marked as used, free, and _unmapped_. All free space is trimmed (unmapped/deallocated) at macOS startup. The trimming procedure for NVMe drives happens in LBA ranges due to the nature of the DSM command with up to 256 ranges per command. The more fragmented the memory on the drive is, the more commands are necessary to trim all the free space.
 
@@ -1648,17 +1534,17 @@ _Note 3_ : Trim operations are _only_ affected at booting phase when the startup
 反转了，在关掉Trim之后，会出现”宗卷哈希值不匹配“，甚至出现冻屏、卡死的现象，再三衡量一下，还是吧Trim重新开启，SetApfsTrimTimeout设置为-1
 
 21. ThirdPartyDrives
-**Type**: plist boolean
-**Failsafe**: false
-**Requirement**: 10.6 (not required for older)
-**Description**: Apply vendor patches to IOAHCIBlockStorage.kext to enable native features for third-party drives, such as TRIM on SSDs or hibernation support on 10.15 and newer.
+Type: plist boolean
+Failsafe: false
+Requirement: 10.6 (not required for older)
+Description: Apply vendor patches to IOAHCIBlockStorage.kext to enable native features for third-party drives, such as TRIM on SSDs or hibernation support on 10.15 and newer.
 
 _Note_: This option may be avoided on user preference. NVMe SSDs are compatible without the change. For AHCI SSDs on modern macOS version there is a dedicated built-in utility called trimforce. Starting from 10.15 this utility creates EnableTRIM variable in APPLE_BOOT_VARIABLE_GUID namespace with 01 00 00 00 value.
 
 22. XhciPortLimit
-**Type**: plist boolean
-**Failsafe**: false
-**Requirement**: 10.11 (not required for older)
+Type: plist boolean
+Failsafe: false
+Requirement: 10.11 (not required for older)
 
 ```
 **Description**: Patch various kexts (AppleUSBXHCI.kext, AppleUSBXHCIPCI.kext, IOUSBHostFamily.kext) to remove USB port count limit of 15 ports.
@@ -1689,12 +1575,12 @@ Debug
 
 修改config.plist中的如下内容：
 
-* **AppleDebug** `YES`
-* **ApplePanic** `YES`
-* **DisableWatchdog** `YES`
-* **Target** `67`
-* **DisplayLevel** `2147483714`
-* **PickerMode** `Builtin`
+* AppleDebug `YES`
+* ApplePanic `YES`
+* DisableWatchdog `YES`
+* Target `67`
+* DisplayLevel `2147483714`
+* PickerMode `Builtin`
 
 在Config.plist_NVRAM/7C436110-AB2A-4BBB-A880-FE41995C9F82_boot-args栏目中增加
 
@@ -1712,15 +1598,15 @@ Debug
 ### 6.3 Security
 So something that makes OpenCore truly special is how it's been built with security in mind which is quite rare especially in the Hackintosh community. Well here we'll be going through and setting up some of OpenCore's great Security features:
 
-* **FileVault**
+* FileVault
 	* Apple's built-in drive encryption
-* **Vault**
+* Vault
 	* OpenCore's semi-secure boot, used for snapshotting OpenCore so no unwanted changes happen
-* **ScanPolicy**
+* ScanPolicy
 	* OpenCore's drive policy, determines what types of disks show up in OpenCore's boot menu
-* **OpenCore Password Setup**
+* OpenCore Password Setup
 	* Enable password in OpenCore boot menu
-* **Apple Secure Boot**
+* Apple Secure Boot
 	* Apple's variant of secure boot in the macOS kernel
 
 #### 6.3.1 FileVault
@@ -1731,7 +1617,7 @@ To start, you'll need the following .efi drivers:
 * OpenRuntime.efi
 	* [OpenUsbKbDxe.efi (opens new window)](https://github.com/acidanthera/OpenCorePkg/releases)for DuetPkg users(systems without UEFI support)
 
-**Do not use VirtualSMC.efi with OpenCore, its already baked inside**. You do however require VirtualSMC.kext still
+Do not use VirtualSMC.efi with OpenCore, its already baked inside. You do however require VirtualSMC.kext still
 
 Setting in your config.plist:
 
@@ -1757,7 +1643,7 @@ With all this, you can proceed to enable FileVault like on a normal mac under `S
 For UI issues, see [Fixing Resolution and Verbose](https://dortania.github.io/OpenCore-Post-Install/cosmetic/verbose.html)
 
 #### 6.3.2Vault
-**What is vaulting?**
+What is vaulting?
 
 Well vaulting is based around 2 things, vault.plist and vault.sig:
 
@@ -1770,7 +1656,7 @@ The specifics of vaulting is that a 256 byte RSA-2048 signature of vault.plist w
 
 Do note that nvram.plist won't be vaulted so users with emulated NVRAM still have risk of someone adding/removing certain NVRAM variables
 
-**Settings in your config.plist**:
+Settings in your config.plist:
 
 * ```
 Misc -> Security -> Vault
@@ -1791,7 +1677,7 @@ YES
 
 * Needed with Insyde firmwares for fixing secure boot keys and reporting violations
 
-**Setting up vault**:
+Setting up vault:
 
 Grab OpenCorePkg and open the `CreateVault` folder, inside we'll find the following:
 
@@ -1803,13 +1689,9 @@ The last one is what we care about: `sign.command`
 
 So when we run this command, it'll look for the EFI folder located beside our Utilities folder, so we want to bring either our personal EFI into the OpenCorePkg folder or bring Utilities into our EFI folder:
 
-![](hackintosh-Inspiron3670-franksfc/sign.194f5ee7.png)img
-
 Now we're ready to run `sign.command`:
 
-![](hackintosh-Inspiron3670-franksfc/sign-demo.1f95ff8c.png)img
-
-**Disabling Vault after setup**:
+Disabling Vault after setup:
 
 If you're doing heavy troubleshooting or have the need to disable Vault, the main things to change:
 
@@ -1920,17 +1802,11 @@ Next let's open our config.plist and add these values to Misc -> Security:
 
 * Note: Don't forget to also enable `EnablePassword`
 
-![](hackintosh-Inspiron3670-franksfc/password-config.33732079.png)img
-
 Once these changes have been made, you can save and reboot the machine. Now when you enter OpenCore's menu, you should receive a prompt:
-
-![](hackintosh-Inspiron3670-franksfc/password-demo.780d8793.png)img
 
 Enter your password and you should get your regular boot options:
 
 * Note: Between typing the password and entering the menu, some older machines and VMs can take 30 seconds+ to finish verification. Please be patient
-
-![](hackintosh-Inspiron3670-franksfc/password-done.ce858184.png)img
 
 #### 6.3.5 *Apple Secure Boot*
 
@@ -1942,8 +1818,6 @@ Enter your password and you should get your regular boot options:
 * Information based off of [vit9696's thread (opens new window)](https://applelife.ru/posts/905541), [Apple's T2 docs (opens new window)](https://www.apple.com/euro/macbook-pro-13/docs/a/Apple_T2_Security_Chip_Overview.pdf)and [Osy's Secure Boot page(opens new window)](https://osy.gitbook.io/hac-mini-guide/details/secure-boot)
 
 To best understand Apple Secure Boot, lets take a look at how the boot process works in Macs vs OpenCore in regards to security:
-
-![](hackintosh-Inspiron3670-franksfc/extension.e256de89.png)img
 
 As we can see, there's several layers of trust incorporated into Apple Secure Boot:
 
@@ -2150,7 +2024,7 @@ sudo nvram boot-args="-v"
 
 当然，对于使用第三方引导程序（如 Clover 等）的用户来说，可以在 `config.plist` 文件、或者在启动菜单中设置引导参数。
 
-- - - -
+- [ ] - - -
 * `-v`：以「啰嗦模式」启动，等价于 Mac 设备上的快捷键 Command + V。
 
 * `-x`：以「安全模式」启动，等价于 Mac 设备上的长按 Shift 键。在这一模式下 macOS 会加载尽可能少的内核扩展（kext）文件。
@@ -2177,7 +2051,7 @@ sudo nvram boot-args="-v"
 
 * `trace`：Kernel Trace 缓冲区大小。
 
-* `iog=0x0`：这一参数强制 macOS 在笔记本上 **不使用** Clamshell 模式。此时当你外接了显示器和键盘，合盖后笔记本不会睡眠、但内置显示器将会关闭。
+* `iog=0x0`：这一参数强制 macOS 在笔记本上 不使用 Clamshell 模式。此时当你外接了显示器和键盘，合盖后笔记本不会睡眠、但内置显示器将会关闭。
 
 * `serverperfmode`：为 macOS Server 开启 [性能模式](https://support.apple.com/en-gb/HT202528)
 
@@ -2365,8 +2239,8 @@ macOS 10.14.1+ 的USB端口限制补丁已经失效了，因此无法一次配�
 10. 运行 Hackintool 并转到 工具栏 ▸ `USB` 选项
 
 ```
-- [ ] 用一个 USB 2.0 的设备将所有的2.0端口（通常为黑色）全部插拔一遍
-- [ ] 活动的端口将以`绿色`突出显示
+- [ ] [ ] 用一个 USB 2.0 的设备将所有的2.0端口（通常为黑色）全部插拔一遍
+- [ ] [ ] 活动的端口将以`绿色`突出显示
   ![USBOrigin](https://pics.daliansky.net/d/xD0Ar91B/blog/Hackintool-Screen-Shot-for-blog/USBOrigin.png?download=1)
 ```
 
@@ -2377,9 +2251,9 @@ macOS 10.14.1+ 的USB端口限制补丁已经失效了，因此无法一次配�
 13. 运行 Hackintool 并转到工具栏 ▸ `USB` 选项
 
 ```
-- [ ] 用 USB 3.0 的设备将所有的3.0端口（蓝色_红色_黄色）全部插拔一遍
-- [ ] USB Type-C 接口的设备需要用正反两面对所有的端口进行插拔
-- [ ] 活动的端口将以绿色突出显示
+- [ ] [ ] 用 USB 3.0 的设备将所有的3.0端口（蓝色_红色_黄色）全部插拔一遍
+- [ ] [ ] USB Type-C 接口的设备需要用正反两面对所有的端口进行插拔
+- [ ] [ ] 活动的端口将以绿色突出显示
 ```
 
 14. 删除所有未突出显示为绿色的端口，请您也用小本将活动端口的数据记下来，以防万一
@@ -2388,12 +2262,12 @@ macOS 10.14.1+ 的USB端口限制补丁已经失效了，因此无法一次配�
 15. 使用下拉列表将每个端口设置为适当的接口类型
 
 ```
-- [ ] 永久连接设备的USB端口（例如M.2蓝牙卡）应设置为 `Internal` (内建)
-- [ ] 与 USB3 端口相连的 HSxx 端口 (USB2) 应设置为 `USB3`
-- [ ] 内部集线器通常连接到端口PR11和PR21，因此应设置为 `Internal` (内建)
-- [ ] USB Type-C 接口可以是9或10，这取决于硬件如何处理 USB Type-C 型设备/电缆的正反两种可能方向
-- [ ] 如果 USB Type-C 在两个方向上使用相同的 SSxx，则它具有内建切换器，因此应设置为 `TypeC+Sw`
-- [ ] 如果 USB Type-C 在两个方向使用不同的 SSxx，则它没有内建切换器，因此应设置为 `TypeC`
+- [ ] [ ] 永久连接设备的USB端口（例如M.2蓝牙卡）应设置为 `Internal` (内建)
+- [ ] [ ] 与 USB3 端口相连的 HSxx 端口 (USB2) 应设置为 `USB3`
+- [ ] [ ] 内部集线器通常连接到端口PR11和PR21，因此应设置为 `Internal` (内建)
+- [ ] [ ] USB Type-C 接口可以是9或10，这取决于硬件如何处理 USB Type-C 型设备/电缆的正反两种可能方向
+- [ ] [ ] 如果 USB Type-C 在两个方向上使用相同的 SSxx，则它具有内建切换器，因此应设置为 `TypeC+Sw`
+- [ ] [ ] 如果 USB Type-C 在两个方向使用不同的 SSxx，则它没有内建切换器，因此应设置为 `TypeC`
 ```
 
 ```
@@ -2406,34 +2280,18 @@ macOS 10.14.1+ 的USB端口限制补丁已经失效了，因此无法一次配�
 ```
 ![USBOutput](https://pics.daliansky.net/d/xD0Ar91B/blog/Hackintool-Screen-Shot-for-blog/USBOutput.png?download=1)
 ![USBOutput2](https://pics.daliansky.net/d/xD0Ar91B/blog/Hackintool-Screen-Shot-for-blog/USBOutput2.png?download=1)
-```
-
-```
-- [ ] 复制 `SSDT-EC.aml` (如果有) 到 EFI ▸ CLOVER ▸ ACPI ▸ patched
-```
-
-```
-- [ ] 接下来的方案请
-```
-
-```
-  2 选 1
-```
-
-```
-  :
-```
-
-```
-	- [ ] A) 复制 USBPorts.kext 到 EFI ▸ CLOVER ▸ kexts ▸ Other；或者
-	- [ ] B) 复制 SSDT-UIAC.aml 和 SSDT-USBX.aml (如果有) 到 EFI ▸ CLOVER ▸ ACPI ▸ patched
+- [ ] [ ] 复制 `SSDT-EC.aml` (如果有) 到 EFI ▸ CLOVER ▸ ACPI ▸ patched
+- [ ] [ ] 接下来的方案请
+  2 选 1：
+	- [ ] [ ] A) 复制 USBPorts.kext 到 EFI ▸ CLOVER ▸ kexts ▸ Other；或者
+	- [ ] [ ] B) 复制 SSDT-UIAC.aml 和 SSDT-USBX.aml (如果有) 到 EFI ▸ CLOVER ▸ ACPI ▸ patched
 ```
 
 17. 好了，是时候清除不需要的补丁和文件了:
 
 ```
-- [ ] 删除 (`-uia_exclude_ss`，`-uia_exclude_hs` 和 `uia_include=x`)
-- [ ] 删除 `USBInjectAll.kext` （如果您使用的是 USB-Ports）
+- [ ] [ ] 删除 (`-uia_exclude_ss`，`-uia_exclude_hs` 和 `uia_include=x`)
+- [ ] [ ] 删除 `USBInjectAll.kext` （如果您使用的是 USB-Ports）
 ```
 
 18. 重启
@@ -2443,9 +2301,9 @@ macOS 10.14.1+ 的USB端口限制补丁已经失效了，因此无法一次配�
 20. 依次选择 USB 端口列表中的各个项目，然后单击“删除”删掉全部项目，完成后再单击“刷新”按钮
 
 ```
-- [ ] 您现在可以检查你的 USB 是否全部正常工作
-- [ ] 如果您要更改USB端口类型，请在更改后重新生成修复文件并替换之前的文件
-- [ ] 如果您一不小心删了修补文件，请重新从头来过，或者您可以用您的小本 ⊙﹏⊙∥∣°
+- [ ] [ ] 您现在可以检查你的 USB 是否全部正常工作
+- [ ] [ ] 如果您要更改USB端口类型，请在更改后重新生成修复文件并替换之前的文件
+- [ ] [ ] 如果您一不小心删了修补文件，请重新从头来过，或者您可以用您的小本 ⊙﹏⊙∥∣°
 ```
 
 *FAQ*
@@ -2873,9 +2731,9 @@ The most common way to see the TSC issue:
 ### 13.14 强制睡眠
 睡眠即醒很大程度上跟 USB 的定制相关，一般一个好的 USB 定制就能解决睡眠即醒的问题。当然还有很多无法解决的问题，比如蓝牙不能在 HUB 下进行内建，等等。甚至有些时候我们都不知道为什么黑果会睡不着，那有没有一个办法让黑果强制睡眠呢？答案是有的。经过我的摸索，有几种方法能达到强制睡眠的效果，只是方法不同而已，但主要围绕的还是 `0d/6d` 的数值来做一些工作。这些方法涉及了很多 OC 领域的一些小技巧，我也顺便展示给大家。
 
-> `0d/6d` 补丁是阻止一些部件参与唤醒工作，这其中包括了xhc部件，意味着你无法使用鼠标键盘唤醒，只能用电源键唤醒。但若你有一组除了xhc之外的usb控制器，那把键盘鼠标插在那两个控制器上，可以在使用强制睡眠的情况下用键盘鼠标唤醒电脑。  
+> `0d/6d` 补丁是阻止一些部件参与唤醒工作，这其中包括了xhc部件，意味着你无法使用鼠标键盘唤醒，只能用电源键唤醒。但若你有一组除了xhc之外的usb控制器，那把键盘鼠标插在那两个控制器上，可以在使用强制睡眠的情况下用键盘鼠标唤醒电脑。    
 
-- - - -
+- [ ] - - -
 #### 13.14.1 分辨0D/06
 我们打开之前提取的SSDT，随便搜索五大部件中的一个，比如说 XDCI：
 ![](hackintosh-Inspiron3670-franksfc/k5jDCx9c3WdJunh.png)截屏2019-11-07下午11.06.02.png
@@ -2885,9 +2743,9 @@ The most common way to see the TSC issue:
 #### 13.14.2 方法一: OC 全局重命名强制睡眠
 上一步中已经确认了你的主板是 `0D` 还是 `06`，打开 `OC little` 的 `06/0D` 补丁，选择合适自己主板的补丁集，比如我的是 `Name-6D更名.plist`。将补丁抄入自己的 `config.plist` 后重启生效。
 
-> 全局重命名会导致其他系统无法通过 OC 引导开机，不建议使用。  
+> 全局重命名会导致其他系统无法通过 OC 引导开机，不建议使用。    
 
-- - - -
+- [ ] - - -
 #### 13.14.3 方法二: 沿用Clover版本的0D/06补丁&展示TgtBridge在OC下的用法
 宪武大大做的 clover 版本的 0d/6d 补丁，其实没啥必要讲，只是有留言问了 tgtbridge 在 oc 下怎么用，那我就展示一下吧。这个补丁原理是一样的，通过重命名的方式改 `_prw`。
 
@@ -2923,11 +2781,8 @@ TableSignature    Data          44534454      //hex转text的含义即是：DSDT
 这里就是一个还没全部翻译好的 oc 版改名 xhc 的 prw。那么如何定位 xhc 下的 `_prw` 呢，主要是填写 `Count` 和 `Skip`。其实 oc 的 `tgtbridge` 是通过一个个数过去来定位具体哪一个位置的。比如xhc的prw是整张dsdt里面的第55个，那 `skip` 填 `54`，意味着跳过前 `54` 个，从第 `55` 个开始执行。那执行多少次呢？执行一次 `count` 就填 1；比如你要同时改第 `55` 个和 `56` 个，那 count 就填 `2`。说了这么多，我来实操一下吧：
 
 打开dsdt，在左下角直接搜索_PRW，就能把整张表的_PRW筛选出来了：
-![](hackintosh-Inspiron3670-franksfc/EfxazsJNZLKmgv3.png)截屏2019-11-08上午2.57.43.png
 
 我总共数了一下，一共有56个_PRW。我们再在主内容栏上按 ⌘ +F 搜索 xhc，直接找到 xhc 的 `_PRW`，刚好我们看到我的 xhc 实在整张表的倒数第 4 个，也就是正数第 53 个：
-
-![](hackintosh-Inspiron3670-franksfc/SzvArXcH4OimtR9.png)截屏2019-11-08上午3.00.36.png
 
 那么我们就可以补充完整张表了：
 
@@ -2948,7 +2803,7 @@ TableSignature   Data         44534454
 
 如果你想第 53、54、55 个都改掉，那 count 就写 3，意味着顺序执行3次。好了，就这样，有问题留言。
 
-- - - -
+- [ ] - - -
 #### 13.14.4 方法三：配合SSDT+重命名的强制睡眠补丁（推荐）
 oc 不提倡用户直接全局重命名，如果真的要用重命名，也一定是搭配 ssdt 去做重命名，所以这个方法也是宪武大大和我最推荐的一种方法。
 
@@ -3022,7 +2877,7 @@ TableSignature:<>
 
 这几项在前文已有涉及，不再赘述，如果仍然不能解决，建议继续折腾或者去论坛求助。
 
-**笔者的这个机器需要调整bios的设置，才能完美睡眠，否则就会睡死。具体的bios设置见上文。**
+笔者的这个机器需要调整bios的设置，才能完美睡眠，否则就会睡死。具体的bios设置见上文。
 
 ## 14.0 CPUFriend
 此章节对你的要求会相对高一点，并且请你具备如下条件：
@@ -3051,9 +2906,8 @@ git clone https://github.com/acidanthera/CPUFriend.git cp ~/desktop/cpu/CPUFrien
 CpuFriendFriend/CPUFriendFriend.command
 ```
 
-* 你会看到如图的命令行，这里1 of 4代表第一段睿频的设置，以此类推，数值越大睿频越高，下面要求你填写的是最低的频率值，你想要低一点的800MHZ就填08，高一点的1300MHZ就填0D（注意大小写）![](hackintosh-Inspiron3670-franksfc/cRhHzeEiAQXLSds.png)Screen-Shot-2019-12-09-at-11.28.30-AM.png
-* 填完前两段后，它会要求你填写EPP值，EPP值越低，性能表现越强。我们是填的前两段的低频率部分，我们可以选择节能型的，比如0x80，如果你想极致性能，可以填0x00。
-![](hackintosh-Inspiron3670-franksfc/6p4iKMAeIHPyfBC.png)Screen-Shot-2019-12-09-at-11.32.38-AM.png
+* 你会看到如图的命令行，这里1 of 4代表第一段睿频的设置，以此类推，数值越大睿频越高，下面要求你填写的是最低的频率值，你想要低一点的800MHZ就填08，高一点的1300MHZ就填0D（注意大小写）
+* * 填完前两段后，它会要求你填写EPP值，EPP值越低，性能表现越强。我们是填的前两段的低频率部分，我们可以选择节能型的，比如0x80，如果你想极致性能，可以填0x00。
 * 直至你填完所有4段变频需求后，便会生成你的变频plist。我们执行以下命令:
 
 ```
@@ -3115,13 +2969,13 @@ Are these suggestions valid at all?
 
 For first we have to clarify something about Darkwake. The DarkWake feature was for first introduced in Mac OS X Lion. This feature allows to wake up certain parts of computer from sleep, while leaving other parts in sleep mode (for example display etc). Darkwake = display stays dark when comp wakes and performs some tasks. When tasks are done, comp should go back to sleep. But on Hack's Darkwake caused several problems, for example comps went into state, where those become inaccessible and forced reboot were needed. On some cases Darkwake caused reboots too and.. Darwake is related to [Power Nap](https://support.apple.com/en-us/HT204032) which is available since OS X Mountain Lion.
 
-- - - -
+- [ ] - - -
 
-**Darkwake and XNU**
+Darkwake and XNU
 
 Darkwake is part of [XNU](https://github.com/apple/darwin-xnu/).
 
-> [ ](https://www.insanelymac.com/forum/topic/342002-darkwake-on-macos-catalina-boot-args-darkwake8-darkwake10-are-obsolete/#) QuoteXNU kernel is part of the Darwin operating system for use in macOS and iOS operating systems. XNU is an acronym for X is Not Unix. XNU is a hybrid kernel combining the Mach kernel developed at Carnegie Mellon University with components from FreeBSD and a C++ API for writing drivers called IOKit. XNU runs on x86_64 for both single processor and multi-processor configurations.  
+> [ ](https://www.insanelymac.com/forum/topic/342002-darkwake-on-macos-catalina-boot-args-darkwake8-darkwake10-are-obsolete/#) QuoteXNU kernel is part of the Darwin operating system for use in macOS and iOS operating systems. XNU is an acronym for X is Not Unix. XNU is a hybrid kernel combining the Mach kernel developed at Carnegie Mellon University with components from FreeBSD and a C++ API for writing drivers called IOKit. XNU runs on x86_64 for both single processor and multi-processor configurations.    
 Darkwake behaviours are defined in IOPMrootDomain.cpp.
 
 The easiest way to check XNU version is to use terminal command _uname -av_.
@@ -3135,7 +2989,7 @@ According to this macOS Catalina 10.15.2 uses XNU 6153.61.1.
 
 The latest publicly available source code of XNU is 4903.241.1. So we cannot check source code of latest XNU's. Please correct me if I'm wrong.
 
-[Code below](https://github.com/apple/darwin-xnu/blob/master/iokit/Kernel/IOPMrootDomain.cpp#L1099) reveals that boot arg **darkwake** correlates to enum **gDarkWakeFlags**.
+[Code below](https://github.com/apple/darwin-xnu/blob/master/iokit/Kernel/IOPMrootDomain.cpp#L1099) reveals that boot arg darkwake correlates to enum gDarkWakeFlags.
 
 ```c
 PE_parse_boot_argn("darkwake", &gDarkWakeFlags, sizeof(gDarkWakeFlags));
@@ -3170,7 +3024,7 @@ Audio Not Suppressed = 1024
 
 HID = Human-interface devices, such as keyboards, pointing devices, and digitizers like pens and touch pads.
 
-As flags are used for [bitwise operations](https://en.wikipedia.org/wiki/Bitwise_operation), then we can easily notice that **combinations 10 and 8 are for sure invalid now**. darkwake=8 equals actually to darkwake=0 and darkwake=10 equals to darkwake=2.
+As flags are used for [bitwise operations](https://en.wikipedia.org/wiki/Bitwise_operation), then we can easily notice that combinations 10 and 8 are for sure invalid now. darkwake=8 equals actually to darkwake=0 and darkwake=10 equals to darkwake=2.
 
 If we check older XNU versions, then these values are removed since XNU 2782.1.97 ( = Yosemite ):
 
@@ -3180,9 +3034,9 @@ If we check older XNU versions, then these values are removed since XNU 2782.1.9
     kDarkWakeFlagIgnoreDiskIOMask    = 0x0C
 ```
 
-According to this **boot flags darkwake=8 and darkwake=10 are obsolete if you have Yosemite or newer macOS** as related flags are removed from XNU.
+According to this boot flags darkwake=8 and darkwake=10 are obsolete if you have Yosemite or newer macOS as related flags are removed from XNU.
 
-**What is the default value for darkware boot arg?**
+What is the default value for darkware boot arg?
 
 According to [XNU source code](https://github.com/apple/darwin-xnu/blob/master/iokit/Kernel/IOPMrootDomain.cpp#L337) the default value of boot arg darkware is 3 (darkwake=3):
 
@@ -3192,7 +3046,7 @@ static uint32_t         gDarkWakeFlags = kDarkWakeFlagHIDTickleNone;
 
 We have to clarify that xnu 4903.221.2 is used since macOS Mojave 10.14.1 and xnu 4903.241.1 is used since macOS Mojave 10.14.3. How about the latest macOS? Sadly there is no source code available.
 
-To figure out which value is defined on latest kernel we have to download the latest available [Kernel Debug Kit](https://developer.apple.com/download/more/?q=Kernel Debug Kit), which is 10.15.1 build 19B77a. By using Hopper Disassembler we see that **default value on macOS Catalina 10.15.1 for gDarkWakeFlags is 0x00000003**, which equals to 3.
+To figure out which value is defined on latest kernel we have to download the latest available [Kernel Debug Kit](https://developer.apple.com/download/more/?q=Kernel Debug Kit), which is 10.15.1 build 19B77a. By using Hopper Disassembler we see that default value on macOS Catalina 10.15.1 for gDarkWakeFlags is 0x00000003, which equals to 3.
 
 ```
                      __ZL14gDarkWakeFlags:        // gDarkWakeFlags
@@ -3201,15 +3055,15 @@ ffffff80012b93b0         dd         0x00000003
 
 So by default Darkwake should not post any HID Tickle's. This also reveals the secret why some users encounter issues with frozen peripheral device's on Hack's when Power Nap is enabled. To use Darkwake on Hack's require very well configured USB ports.
 
-- - - -
+- [ ] - - -
 
-**Power Nap & Darkwake**
+Power Nap & Darkwake
 
 If you have Power Nap disabled then computer shouldn't wake automatically. On most cases darkwake boot arg affects how computers should behave on case of Power Nap enabled. If everything is configured properly you do not need define darkwake boot flag at all. Anyhow, there might be motherboards, which benefit from user defined value. But keep in mind that darkwake=8 and darkwake=10 are obsolete since Yosemite.
 
-- - - -
+- [ ] - - -
 
-**Which values are valid for darkwake?**
+Which values are valid for darkwake?
 
 As flags are used for bitwise operations, then these values are valid:
 
@@ -3290,11 +3144,11 @@ void IOPMrootDomain::reportUserInput( void )
 }
 ```
 
-As you see from code examples above, there is no any huge mystery about darkwake boot arg and you should use it mostly on case when you really need to manipulate HID tickle behaviour. On most cases it's more important to properly configure you system power management rather than paying with darkwake boot arg, which can be done via terminal command **pmset**.
+As you see from code examples above, there is no any huge mystery about darkwake boot arg and you should use it mostly on case when you really need to manipulate HID tickle behaviour. On most cases it's more important to properly configure you system power management rather than paying with darkwake boot arg, which can be done via terminal command pmset.
 
-- - - -
+- [ ] - - -
 
-**Power Management**
+Power Management
 
 To check Power Management settings use terminal command:
 
@@ -3304,24 +3158,23 @@ pmset -g
 
 Also you can use Hackintool to check power management settings:
 
-[![](hackintosh-Inspiron3670-franksfc/hackintool-pmset-output.jpg.527e4b658f3488e13583286d4118f970.jpg)hackintool-pmset-output.jpg.527e4b658f3488e13583286d4118f970.jpg](https://www.insanelymac.com/uploads/monthly_2020_01/hackintool-pmset-output.jpg.527e4b658f3488e13583286d4118f970.jpg)
 
 Power Management Settings explained:
 
-* **displaysleep** - display sleep timer; replaces ’dim’ argument in 10.4 (value in minutes, or 0 to disable)
-* **disksleep** - disk spindown timer; replaces ’spindown’ argument in 10.4 (value in minutes, or 0 to disable)
-* **sleep** - system sleep timer (value in minutes, or 0 to disable)
-* **womp** - wake on ethernet magic packet (value = 0/1). Same as "Wake for network access" in the Energy Saver preferences.
+* displaysleep - display sleep timer; replaces ’dim’ argument in 10.4 (value in minutes, or 0 to disable)
+* disksleep - disk spindown timer; replaces ’spindown’ argument in 10.4 (value in minutes, or 0 to disable)
+* sleep - system sleep timer (value in minutes, or 0 to disable)
+* womp - wake on ethernet magic packet (value = 0/1). Same as "Wake for network access" in the Energy Saver preferences.
 * ring - wake on modem ring (value = 0/1)
-* **powernap** - enable/disable Power Nap on supported machines (value = 0/1)
-* **proximitywake** - On supported systems, this option controls system wake from sleep based on proximity of devices using same iCloud id. (value = 0/1)
+* powernap - enable/disable Power Nap on supported machines (value = 0/1)
+* proximitywake - On supported systems, this option controls system wake from sleep based on proximity of devices using same iCloud id. (value = 0/1)
 * autorestart - automatic restart on power loss (value = 0/1)
 * lidwake - wake the machine when the laptop lid (or clamshell) is opened (value = 0/1)
 * acwake - wake the machine when power source (AC/battery) is changed (value = 0/1)
 * lessbright - slightly turn down display brightness when switching to this power source (value = 0/1)
 * halfdim - display sleep will use an intermediate half-brightness state between full brightness and fully off (value = 0/1)
 * sms - use Sudden Motion Sensor to park disk heads on sudden changes in G force (value = 0/1)
-* **hibernatemode** - change hibernation mode. Please use caution. (value = integer)
+* hibernatemode - change hibernation mode. Please use caution. (value = integer)
 * hibernatefile - change hibernation image file location. Image may only be located on the root volume. Please use caution. (value = path)
 * ttyskeepawake - prevent idle system sleep when any tty (e.g. remote login session) is ’active’. A tty is ’inactive’ only when its idle time exceeds the system sleep timer. (value = 0/1)
 * networkoversleep - this setting affects how OS X networking presents shared network services during system sleep. This setting is not used by all platforms; changing its value is unsupported.
@@ -3351,9 +3204,9 @@ pmset -g assertions
 
 So, before using blindly darkwake boot arg to solve some sleep issues, make instead sure that USB ports and Power Management settings of your Hack are configured properly.
 
-- - - -
+- [ ] - - -
 
-**Sleep & Wake**
+Sleep & Wake
 
 Quite often Hack's users have sleep/wake issues because they don't pay attention to the fact that Apple's macOS is developed for Apple hardware in mind, not regular PC's.
 
@@ -3369,7 +3222,7 @@ Of course sleep mode isn't something that Apple has invented first. Since Decemb
 |  G2  |                           Soft Off                           |  S5  | G2/S5 is almost the same as G3 _Mechanical Off_, except that the power supply unit (PSU) still supplies power, at a minimum, to the power button to allow return to S0. A full reboot is required. No previous content is retained. Other components may remain powered so the computer can "wake" on input from the keyboard, clock, modem, LAN, or USB device |
 |  G3  |                        Mechanical Off                        |      | The computer's power has been totally removed via a mechanical switch (as on the rear of a PSU). The power cord can be removed and the system is safe for disassembly (typically, only the real-time clock continues to run using its own small battery) |
 
-Since Mac OS X Lion Apple is using DarkWake, which were wrapped into [Power Nap](https://support.apple.com/en-us/HT204032) on OS X Mountain Lion. To understand and fix macOS sleep issues we also need the knowledge about sleep states which macOS comps may have. To check log of macOS computers sleep_wake we can use _**_pmset_**_ tool. Following terminal code prints sleep_wake history.
+Since Mac OS X Lion Apple is using DarkWake, which were wrapped into [Power Nap](https://support.apple.com/en-us/HT204032) on OS X Mountain Lion. To understand and fix macOS sleep issues we also need the knowledge about sleep states which macOS comps may have. To check log of macOS computers sleep_wake we can use __pmset__ tool. Following terminal code prints sleep_wake history.
 
 ```
 pmset -g log|grep -e " Sleep  " -e " Wake  "
@@ -3381,27 +3234,27 @@ I to check more closely sleep history then we can recognise that macOS has at le
 * Idle sleep
 * Maintenance sleep
 
-**Software sleep**
+Software sleep
 
 Software sleep is trigged by computer user or by some software, which is configured to put comp sleep after certain tasks done.
 
-**Idle sleep**
+Idle sleep
 
 Idle sleep is triggered by idle timer. Each time user interacts with computer idle timer is reset. If users doesn't interact within idle timer countdown time, then Idle sleep is triggered.
 
-**Maintenance sleep**
+Maintenance sleep
 
 If user has enabled "Wake for Ethernet network access", then macOS goes from Idle or Software sleep into Maintenance sleep immediately.
 
-**Power Nap**
+Power Nap
 
 If Power Nap is enabled, then computer wakes up automatically after certain period of time, handles certain tasks and goes back to sleep. Apple's documentation reveals that behaviour of power nap doesn't depend only macOS version running on comp but at hardware and it's firmware too. Documentation clearly states that comps made on different time behave differently. which points directly that Power Nap is related to the hardware/firmware too.
 
-> [ ](https://www.insanelymac.com/forum/topic/342002-darkwake-on-macos-catalina-boot-args-darkwake8-darkwake10-are-obsolete/#) Quote**Power Nap responds to your battery power state**  
-> The year your notebook computer was released determines how Power Nap responds to your battery power state.  
-> Computers with 2013 or a later year in the model name use Power Nap until the battery is drained. Computers with 2012 or an earlier year in the model name suspend Power Nap if the battery has a charge of 30% or less. Power Nap resumes when you connect to AC power.  
-> To increase battery life while using Power Nap, disconnect any USB, Thunderbolt, or FireWire devices that may draw power from the computer. Learn more about maximizing battery life.**Power Nap checks for updates at specific intervals**  
-> When your computer isn't connected to AC power, Power Nap communicates and transfers data for only a few minutes per Power Nap cycle. When connected to AC power, communications and data transfers are continuous.Expand  
+> [ ](https://www.insanelymac.com/forum/topic/342002-darkwake-on-macos-catalina-boot-args-darkwake8-darkwake10-are-obsolete/#) QuotePower Nap responds to your battery power state    
+> The year your notebook computer was released determines how Power Nap responds to your battery power state.    
+> Computers with 2013 or a later year in the model name use Power Nap until the battery is drained. Computers with 2012 or an earlier year in the model name suspend Power Nap if the battery has a charge of 30% or less. Power Nap resumes when you connect to AC power.    
+> To increase battery life while using Power Nap, disconnect any USB, Thunderbolt, or FireWire devices that may draw power from the computer. Learn more about maximizing battery life.Power Nap checks for updates at specific intervals    
+> When your computer isn't connected to AC power, Power Nap communicates and transfers data for only a few minutes per Power Nap cycle. When connected to AC power, communications and data transfers are continuous.Expand    
 According quote above we have to very carefully choose which firmware is emulated on Hack. Changing SMBIOS on Clover/Opencore can help to solve sleep issues or cause them.
 
 An example of sleep log when powernap is enabled:
@@ -3430,7 +3283,7 @@ So there are several variables which have effect on your computer sleep/wake beh
 
 ...
 
-**Edited January 5, 2020 by holyfield**
+Edited January 5, 2020 by holyfield
 
 ### 15.3 darkwake 进一步解释
 Before we get deep into configuring darkwake, it would be best to explain what darkwake is. A great in-depth thread by holyfield can be found here: [DarkWake on macOS Catalina(opens new window)](https://www.insanelymac.com/forum/topic/342002-darkwake-on-macos-catalina-boot-args-darkwake8-darkwake10-are-obsolete/)
@@ -3503,8 +3356,8 @@ darkwake=10
 
 ## 16. 修补 DRM
 
-* **Note**: Safari 14 and macOS 11, Big Sur are currently unsupported by WhateverGreen's DRM patches. Safari 13 in Catalina and older are supported just fine however.
-* **Note 2**: Browsers not using hardware based DRM (ie. Mozilla Firefox or Chromium-based browsers like Google Chrome and Microsoft Edge) will have working DRM without any work both on iGPUs and dGPUs. The below guide is for Safari and other applications using hardware-based DRM.
+* Note: Safari 14 and macOS 11, Big Sur are currently unsupported by WhateverGreen's DRM patches. Safari 13 in Catalina and older are supported just fine however.
+* Note 2: Browsers not using hardware based DRM (ie. Mozilla Firefox or Chromium-based browsers like Google Chrome and Microsoft Edge) will have working DRM without any work both on iGPUs and dGPUs. The below guide is for Safari and other applications using hardware-based DRM.
 
 So with DRM, we have a couple things we need to mention:
 
@@ -3517,8 +3370,6 @@ So with DRM, we have a couple things we need to mention:
 
 ### 16.1 Hardware Acceleration and Decoding
 So before we can get started with fixing DRM, we need to make sure your hardware is working. The best way to check is by running [VDADecoderChecker (opens new window)](https://i.applelife.ru/2019/05/451893_10.12_VDADecoderChecker.zip):
-
-![](hackintosh-Inspiron3670-franksfc/vda.c3501622.png)img
 
 If you fail at this point, there's a couple things you can check for:
 
@@ -3566,7 +3417,7 @@ To check if Lilu and WhateverGreen loaded correctly:
 kextstat | grep -E "Lilu|WhateverGreen"
 ```
 
-> Hey one or more of these kexts aren't showing up  
+> Hey one or more of these kexts aren't showing up    
 Generally the best place to start is by looking through your OpenCore logs and seeing if Lilu and WhateverGreen injected correctly:
 
 ```text
@@ -3582,12 +3433,12 @@ If it says failed to inject:
 
 Main places you can check as to why:
 
-* **Injection order**: Make sure that Lilu is above WhateverGreen in kext order
-* **All kexts are latest release**: Especially important for Lilu plugins, as mismatched kexts can cause issues
+* Injection order: Make sure that Lilu is above WhateverGreen in kext order
+* All kexts are latest release: Especially important for Lilu plugins, as mismatched kexts can cause issues
 
 Note: To setup file logging, see [OpenCore Debugging (opens new window)](https://dortania.github.io/OpenCore-Install-Guide/troubleshooting/debug.html).
 
-**Note**: On macOS 10.15 and newer, AppleGVA debugging is disabled by default, if you get a generic error while running VDADecoderChecker you can enable debugging with the following:
+Note: On macOS 10.15 and newer, AppleGVA debugging is disabled by default, if you get a generic error while running VDADecoderChecker you can enable debugging with the following:
 
 ```text
 defaults write com.apple.AppleGVA enableSyslog -boolean true
@@ -3602,7 +3453,7 @@ defaults delete com.apple.AppleGVA enableSyslog
 ### 16.2 Testing DRM
 So before we get too deep, we need to go over some things, mainly the types of DRM you'll see out in the wild:
 
-**FairPlay 1.x**: Software based DRM, used for supporting legacy Macs more easily
+FairPlay 1.x: Software based DRM, used for supporting legacy Macs more easily
 
 * Easiest way to test this is by playing an iTunes movie:
 
@@ -3610,7 +3461,7 @@ FairPlay 1.x test(opens new window)
 
 * FairPlay 1.x trailers will work on any configuration if WhateverGreen is properly set up - including iGPU-only configurations. However, FairPlay 1.x _movies_ will only play on iGPU-only configurations for around 3-5 seconds, erroring that HDCP is unsupported afterwards.
 
-**FairPlay 2.x/3.x**: Hardware based DRM, found in Netflix, Amazon Prime
+FairPlay 2.x/3.x: Hardware based DRM, found in Netflix, Amazon Prime
 
 * There's a couple ways to test:
 
@@ -3628,7 +3479,7 @@ Spider-Man: Far From Home(opens new window)
 
 * Note: Requires newer AMD GPU to work (Polaris+)
 
-**FairPlay 4.x**: Mixed DRM, found on AppleTV+
+FairPlay 4.x: Mixed DRM, found on AppleTV+
 
 * You can open TV.app, choose TV+ -> Free Apple TV+ Premieres, then click on any episode to test without any trial (you do need an iCloud account)
 * Apple TV+ also has a free trial if you want to use it
@@ -3646,7 +3497,7 @@ So how do you use it? First, identify what configuration you have in the chart (
 
 Next, identify what Shiki mode you need to use. If there are two configurations for your setup, they will differ in the Shiki flags used. Generally, you want hardware decoding over software decoding. If the mode column is blank, then you are done. Otherwise, you should add `shikigva` as a property to any GPU, using DeviceProperties > Add. For example, if the mode we need to use is `shikigva=80`:
 
-![](hackintosh-Inspiron3670-franksfc/dgpu-path.ee8b884a.png)Example of shikigva in Devices Properties
+Example of shikigva in Devices Properties
 
 You can also use the boot argument - this is in the mode column.
 
@@ -3654,7 +3505,7 @@ Here's one example. If we have an Intel i9-9900K and an RX 560, the configuratio
 
 Here's another example. This time, We have an Ryzen 3700X and an RX 480. Our configuration in this case is just "AMD", and we should be using either an iMac Pro or Mac Pro SMBIOS. Again, there are two options: no shiki arguments, and `shikigva=128`. We prefer hardware decoding over software decoding, so we'll choose the `shikigva=128` option, and again inject `shikigva` into our dGPU, this time with value `128`. A reboot and DRM works.
 
-**Notes:**
+Notes:
 
 * You can use [gfxutil (opens new window)](https://github.com/acidanthera/gfxutil/releases)to find the path to your iGPU/dGPU.
 
