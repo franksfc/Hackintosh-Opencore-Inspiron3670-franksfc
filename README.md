@@ -672,7 +672,7 @@ So this section is for those who don't have native NVRAM, the most common hardwa
 * X99
 * X299
 
-For B360, B365, H310, H370, Z390 users, make sure you have [SSDT-PMC (opens new window)](https://dortania.github.io/Getting-Started-With-ACPI/)both under EFI/OC/ACPI and config.plist -> ACPI -> Add. For more info on making and compiling SSDTs, please see ：
+For B360, B365, H310, H370, Z390 users, make sure you have [SSDT-PMC](https://dortania.github.io/Getting-Started-With-ACPI/)both under EFI/OC/ACPI and config.plist -> ACPI -> Add. For more info on making and compiling SSDTs, please see ：
 
 *Note*: 10th gen CPUs do not need this SSDT
 
@@ -866,10 +866,19 @@ TableSignature:<>
 * CPU不恰当的频率设置，如CPUFriend的定制
 * 不恰当的PCIE设备的设置，如显卡
 * Bios设置
+* Nvme ssd与 Macos 不兼容，只能换硬盘
 
 这几项在前文已有涉及，不再赘述，如果仍然不能解决，建议继续折腾或者去论坛求助。
 
-笔者的这个机器需要调整bios的设置，才能完美睡眠，否则就会睡死。具体的bios设置见上文。
+笔者的这个机器的bg4硬盘有问题，与macOS不兼容，必须要换硬盘才行。
+有一个替代的解决办法:
+sudo hibernatemode -a 0
+sudo standby 0
+sudo standbyhigh 86400
+sudo standbylow 86400
+sudo disksleep 0
+sudo rm -f /var/vm/sleepimage
+sudo touch /var/vm/sleepimage
 
 ## 14.0 CPUFriend
 
@@ -923,10 +932,10 @@ cd ~/Desktop/cpu
 请参考[WhateverGreen's DRM](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/FAQ.Chart.md)
 
 
-
 ## Q&A：前置SD卡能不能驱动？
 
 等了许久，前置SD卡终于是有驱动了：RealtekCardReader，但是驱动问题较大，每次睡眠就会意外弹出，并且容易系统崩溃，暂且不使用，观望中……
+
 
 ## *Credits* ：
 
