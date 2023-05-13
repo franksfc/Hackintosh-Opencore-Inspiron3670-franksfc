@@ -51,7 +51,7 @@
 * SATAmode调整为AHCI
 
 * 关闭PTT technology
-* 
+
 * 考虑关闭WIFI和Bluetooth，因为系统里不好驱动
 
 ## 如何解锁Bios的CFGlock和DVMT
