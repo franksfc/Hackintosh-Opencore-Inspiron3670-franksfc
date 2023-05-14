@@ -1,8 +1,4 @@
-# # hackintosh-Inspiron3670-franksfc
-
-# 我的opencore引导
-
-我折腾的过程比较漫长，从下载黑果小兵的镜像用免驱独显，到拔掉独显定制opencore核显，最后不断完善具体的功能，直到黑苹果接近完美。给大家分享一下我的折腾成果，以及我的理由。
+# hackintosh-Inspiron3670-franksfc
 
 ## 机型配置
 
@@ -35,11 +31,12 @@
 
 ## 未实现功能
 
-- [ ] [ ] VGA接口
+- [ ] VGA接口
 
 ## 不稳定功能
 
-- [ ] [ ] 前置SD读卡器
+- [ ] 前置SD读卡器
+- [ ] 开机audiodxe爆音（https://github.com/acidanthera/bugtracker/issues/2073）
 
 
 ## Bios 设置
